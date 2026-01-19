@@ -52,16 +52,24 @@ st.markdown("""
         text-align: center;
     }
     .risk-high {
-        background-color: #ffcccc;
+        background-color: #8b1a1a;
         border-left: 5px solid #e74c3c;
         padding: 1rem;
         border-radius: 5px;
+        color: white;
+    }
+    .risk-high h3, .risk-high p, .risk-high strong {
+        color: white;
     }
     .risk-low {
-        background-color: #ccffcc;
+        background-color: #1a5c2e;
         border-left: 5px solid #2ecc71;
         padding: 1rem;
         border-radius: 5px;
+        color: white;
+    }
+    .risk-low h3, .risk-low p, .risk-low strong {
+        color: white;
     }
 </style>
 """, unsafe_allow_html=True)
