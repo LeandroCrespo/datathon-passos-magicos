@@ -74,11 +74,11 @@ datathon-passos-magicos/
 | **Acurácia** | 78.91% |
 
 ### Features Mais Importantes
-1. IAN (Adequação ao Nível) - 29.9%
-2. IPS (Psicossocial) - 11.8%
-3. MEDIA_INDICADORES - 10.0%
-4. IAA (Autoavaliação) - 10.0%
-5. IPV (Ponto de Virada) - 8.3%
+1. IAN (Adequação ao Nível) - 38.0%
+2. MEDIA_INDICADORES - 11.2%
+3. IAA (Autoavaliação) - 10.5%
+4. IEG (Engajamento) - 10.1%
+5. IPS (Psicossocial) - 8.6%
 
 ---
 
