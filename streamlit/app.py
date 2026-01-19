@@ -243,6 +243,9 @@ elif pagina == "📊 Dashboard":
         
         df_unificado['PEDRA'] = df_unificado['PEDRA'].replace({'Agata': 'Ágata'})
         
+        # ALERTA: Aumento de alunos em risco
+        st.error("⚠️ **ALERTA**: O percentual de alunos em risco de defasagem aumentou de 1.4% (2022) para 11.9% (2024)")
+        
         # Métricas por ano - 3 colunas para os 3 anos
         st.subheader("📊 Evolução dos Indicadores (2022-2024)")
         
@@ -254,10 +257,8 @@ elif pagina == "📊 Dashboard":
             st.metric("Total de Alunos", f"{len(df_2022):,}")
             inde_2022 = df_unificado[df_unificado['ANO']==2022]['INDE'].mean()
             st.metric("INDE Médio", f"{inde_2022:.2f}")
-            def_2022 = df_unificado[df_unificado['ANO']==2022]['DEFASAGEM'].mean()
-            st.metric("Defasagem Média", f"{def_2022:.2f} anos")
             pct_risco_2022 = (df_unificado[df_unificado['ANO']==2022]['DEFASAGEM'] > 0).mean() * 100
-            st.metric("% em Risco", f"{pct_risco_2022:.1f}%")
+            st.metric("🚨 % em Risco (defasagem > 0)", f"{pct_risco_2022:.1f}%")
         
         # 2023
         with col2:
@@ -265,10 +266,8 @@ elif pagina == "📊 Dashboard":
             st.metric("Total de Alunos", f"{len(df_2023):,}", delta=f"{len(df_2023)-len(df_2022):+,}")
             inde_2023 = df_unificado[df_unificado['ANO']==2023]['INDE'].mean()
             st.metric("INDE Médio", f"{inde_2023:.2f}", delta=f"{inde_2023-inde_2022:.2f}")
-            def_2023 = df_unificado[df_unificado['ANO']==2023]['DEFASAGEM'].mean()
-            st.metric("Defasagem Média", f"{def_2023:.2f} anos", delta=f"{def_2023-def_2022:.2f}", delta_color="inverse")
             pct_risco_2023 = (df_unificado[df_unificado['ANO']==2023]['DEFASAGEM'] > 0).mean() * 100
-            st.metric("% em Risco", f"{pct_risco_2023:.1f}%", delta=f"{pct_risco_2023-pct_risco_2022:.1f}%", delta_color="inverse")
+            st.metric("🚨 % em Risco (defasagem > 0)", f"{pct_risco_2023:.1f}%", delta=f"+{pct_risco_2023-pct_risco_2022:.1f}%", delta_color="inverse")
         
         # 2024
         with col3:
@@ -276,21 +275,38 @@ elif pagina == "📊 Dashboard":
             st.metric("Total de Alunos", f"{len(df_2024):,}", delta=f"{len(df_2024)-len(df_2023):+,}")
             inde_2024 = df_unificado[df_unificado['ANO']==2024]['INDE'].mean()
             st.metric("INDE Médio", f"{inde_2024:.2f}", delta=f"{inde_2024-inde_2023:.2f}")
-            def_2024 = df_unificado[df_unificado['ANO']==2024]['DEFASAGEM'].mean()
-            st.metric("Defasagem Média", f"{def_2024:.2f} anos", delta=f"{def_2024-def_2023:.2f}", delta_color="inverse")
             pct_risco_2024 = (df_unificado[df_unificado['ANO']==2024]['DEFASAGEM'] > 0).mean() * 100
-            st.metric("% em Risco", f"{pct_risco_2024:.1f}%", delta=f"{pct_risco_2024-pct_risco_2023:.1f}%", delta_color="inverse")
+            st.metric("🚨 % em Risco (defasagem > 0)", f"{pct_risco_2024:.1f}%", delta=f"+{pct_risco_2024-pct_risco_2023:.1f}%", delta_color="inverse")
         
         st.divider()
         
-        # Gráficos
+        # Gráfico principal: % de Alunos em Risco (DESTAQUE)
+        st.subheader("🚨 Evolução do Risco de Defasagem")
+        st.caption("Alunos com defasagem > 0 estão atrasados em relação à série esperada para sua idade")
+        
+        risco_ano = df_unificado.groupby('ANO').apply(
+            lambda x: (x['DEFASAGEM'] > 0).mean() * 100
+        ).reset_index(name='% em Risco')
+        fig = px.bar(risco_ano, x='ANO', y='% em Risco',
+                    title='Percentual de Alunos em Risco por Ano',
+                    color='% em Risco',
+                    color_continuous_scale='Reds',
+                    text='% em Risco')
+        fig.update_traces(texttemplate='%{text:.1f}%', textposition='outside')
+        fig.update_xaxes(tickvals=[2022, 2023, 2024])
+        fig.update_layout(height=400)
+        st.plotly_chart(fig, use_container_width=True)
+        
+        st.divider()
+        
+        # Gráficos secundários
         col1, col2 = st.columns(2)
         
         with col1:
             st.subheader("Evolução do INDE Médio")
             inde_ano = df_unificado.groupby('ANO')['INDE'].mean().reset_index()
             fig = px.line(inde_ano, x='ANO', y='INDE', markers=True,
-                         title='INDE Médio por Ano')
+                         title='INDE Médio por Ano (maior = melhor)')
             fig.update_traces(line_color='#3498db', line_width=3, marker_size=12)
             fig.update_xaxes(tickvals=[2022, 2023, 2024])
             st.plotly_chart(fig, use_container_width=True)
@@ -308,13 +324,14 @@ elif pagina == "📊 Dashboard":
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("Evolução da Defasagem")
-            def_ano = df_unificado.groupby('ANO')['DEFASAGEM'].mean().reset_index()
-            fig = px.bar(def_ano, x='ANO', y='DEFASAGEM',
-                        title='Defasagem Média por Ano',
-                        color='DEFASAGEM',
-                        color_continuous_scale='RdYlGn_r')
-            fig.update_xaxes(tickvals=[2022, 2023, 2024])
+            st.subheader("Distribuição da Defasagem por Ano")
+            st.caption("Negativo = adiantado | Zero = na idade certa | Positivo = atrasado")
+            fig = px.histogram(df_unificado, x='DEFASAGEM', color='ANO',
+                              barmode='group', nbins=10,
+                              title='Distribuição da Defasagem',
+                              color_discrete_sequence=['#3498db', '#e74c3c', '#2ecc71'])
+            fig.add_vline(x=0, line_dash="dash", line_color="red", 
+                         annotation_text="Limite de Risco")
             st.plotly_chart(fig, use_container_width=True)
         
         with col2:
@@ -343,14 +360,16 @@ elif pagina == "📊 Dashboard":
             st.plotly_chart(fig, use_container_width=True)
         
         with col2:
-            st.subheader("% de Alunos em Risco por Ano")
-            risco_ano = df_unificado.groupby('ANO').apply(
-                lambda x: (x['DEFASAGEM'] > 0).mean() * 100
-            ).reset_index(name='% em Risco')
-            fig = px.bar(risco_ano, x='ANO', y='% em Risco',
-                        title='Percentual de Alunos em Risco',
-                        color='% em Risco',
-                        color_continuous_scale='Reds')
+            st.subheader("Contagem de Alunos em Risco")
+            risco_count = df_unificado.groupby('ANO').apply(
+                lambda x: (x['DEFASAGEM'] > 0).sum()
+            ).reset_index(name='Alunos em Risco')
+            fig = px.bar(risco_count, x='ANO', y='Alunos em Risco',
+                        title='Número Absoluto de Alunos em Risco',
+                        color='Alunos em Risco',
+                        color_continuous_scale='Reds',
+                        text='Alunos em Risco')
+            fig.update_traces(textposition='outside')
             fig.update_xaxes(tickvals=[2022, 2023, 2024])
             st.plotly_chart(fig, use_container_width=True)
     else:
