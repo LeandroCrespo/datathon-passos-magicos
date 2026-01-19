@@ -453,13 +453,13 @@ elif pagina == "📈 Sobre o Modelo":
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric("Recall", "75.00%", help="Capacidade de identificar alunos em risco")
+        st.metric("Recall", "84.62%", help="Capacidade de identificar alunos em risco")
     with col2:
-        st.metric("Precisão", "15.67%", help="Proporção de predições corretas de risco")
+        st.metric("Precisão", "21.78%", help="Proporção de predições corretas de risco")
     with col3:
-        st.metric("F1-Score", "25.93%", help="Média harmônica entre precisão e recall")
+        st.metric("F1-Score", "34.65%", help="Média harmônica entre precisão e recall")
     with col4:
-        st.metric("AUC-ROC", "87.87%", help="Área sob a curva ROC")
+        st.metric("AUC-ROC", "86.83%", help="Área sob a curva ROC")
     
     st.markdown("""
     ### Importância das Features

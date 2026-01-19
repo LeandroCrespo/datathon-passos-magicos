@@ -12,8 +12,8 @@
 | 2 | O Desafio | 30s | Objetivo: prever risco de defasagem precocemente. |
 | 3 | Os Dados | 30s | Dataset PEDE 2022-2024 (3 anos, ~3000 registros). |
 | 4 | Descobertas | 45s | Aumento de alunos na fase correta, Engajamento e Ponto de Virada. |
-| 5 | Modelo | 45s | Random Forest com SMOTE, Recall 65%, AUC-ROC 88%. |
-| 6 | Features | 45s | IAN (30%) e IPS (12%) como principais preditores. |
+| 5 | Modelo | 45s | Random Forest com SMOTE, Recall 85%, AUC-ROC 87%. |
+| 6 | Features | 45s | IAN como principal preditor. |
 | 7 | Streamlit | 30s | Ferramenta para uso da equipe pedagógica. |
 | 8 | Recomendações | 30s | Ações para alunos (suporte) e ONG (engajamento). |
 | 9 | Conclusão | 15s | Resumo do valor entregue. |
@@ -37,10 +37,10 @@
 > "Nossa análise exploratória trouxe insights importantes. Primeiro, houve um aumento significativo de alunos na fase correta: de 29% em 2022 para 42% em 2024. Isso mostra que as ações da ONG estão ajudando os alunos a se alinharem com a fase ideal para sua idade. Segundo, descobrimos que o Engajamento é o motor do desenvolvimento. E terceiro, o Ponto de Virada se mostrou um marcador crucial de recuperação."
 
 **(Slide 5: Modelo Preditivo - 45s)**
-> "Desenvolvemos um modelo de Machine Learning usando Random Forest com técnica de balanceamento SMOTE, treinado com dados dos 3 anos. O modelo alcançou 65% de Recall, ou seja, consegue identificar aproximadamente 2 em cada 3 alunos que realmente estão em risco. O AUC-ROC de 88% indica excelente capacidade de discriminação. Priorizamos o Recall porque, neste contexto, é mais importante identificar o máximo de alunos em risco possível."
+> "Desenvolvemos um modelo de Machine Learning usando Random Forest com técnica de balanceamento SMOTE, treinado com dados dos 3 anos. O modelo alcançou 85% de Recall, ou seja, consegue identificar 85% dos alunos que realmente estão em risco. O AUC-ROC de 87% indica excelente capacidade de discriminação. Priorizamos o Recall porque, neste contexto, é mais importante identificar o máximo de alunos em risco possível."
 
 **(Slide 6: Features Mais Importantes - 45s)**
-> "Mas o que define esse risco? O modelo nos mostrou que a Adequação ao Nível, o IAN, é responsável por 30% da decisão, seguida pelo indicador Psicossocial com 12% e pela Média Geral com 10%. Isso confirma que a defasagem idade-série é o sinal de alerta mais forte, mas que os aspectos emocionais e sociais também são fundamentais."
+> "Mas o que define esse risco? O modelo nos mostrou que a Adequação ao Nível, o IAN, é o indicador mais importante, seguido pela Média dos Indicadores e pelo indicador de Autoavaliação. Isso confirma que a defasagem idade-série é o sinal de alerta mais forte, mas que os aspectos emocionais e sociais também são fundamentais."
 
 **(Slide 7: Aplicação Streamlit - 30s)**
 > "Para colocar essa inteligência na mão da equipe, criamos uma aplicação interativa. Nela, é possível visualizar a evolução da ONG e, principalmente, fazer a predição de risco para novos alunos em tempo real, democratizando o acesso à ciência de dados."
@@ -49,7 +49,7 @@
 > "Com base nisso, recomendamos: para os alunos em risco, foco total em suporte psicossocial e acompanhamento intensivo. Para a organização, sugerimos usar o modelo como triagem na entrada e investir em programas que aumentem o engajamento, pois é ele que transforma o desempenho."
 
 **(Slide 9: Conclusão - 15s)**
-> "Entregamos, portanto, um diagnóstico completo, um modelo preditivo funcional e uma ferramenta prática. É o uso de dados gerando impacto real na ponta."
+> "Entregamos, portanto, um diagnóstico completo, um modelo preditivo com 85% de sensibilidade e uma ferramenta prática. É o uso de dados gerando impacto real na ponta."
 
 **(Slide 10: Obrigado - 15s)**
 > "Agradeço a atenção de todos. O código completo está disponível no GitHub e a aplicação Streamlit está publicada para uso. Muito obrigado!"

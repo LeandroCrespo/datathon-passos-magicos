@@ -69,9 +69,9 @@ datathon-passos-magicos/
 ### Modelo Preditivo (Random Forest - 3 anos de dados)
 | Métrica | Valor |
 |---------|-------|
-| **Recall** | 75.00% |
-| **AUC-ROC** | 87.87% |
-| **Acurácia** | 78.91% |
+| **Recall** | 84.62% |
+| **AUC-ROC** | 86.83% |
+| **Acurácia** | 79.09% |
 
 ### Features Mais Importantes
 1. IAN (Adequação ao Nível) - 38.0%
