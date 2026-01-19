@@ -11,13 +11,16 @@
             background-color: #F5F5F5;
             font-family: 'Inter', sans-serif;
             color: #1A1A1A;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             padding: 80px 80px 0 80px;
+            gap: 60px;
         }
         
-        .header {
-            margin-bottom: 40px;
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .section-label {
@@ -26,146 +29,126 @@
             letter-spacing: 2px;
             color: #FF4B4B;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         h1 {
             font-size: 48px;
             font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
         }
         
-        .subtitle {
-            font-size: 24px;
+        .description {
+            font-size: 20px;
             font-weight: 300;
-            color: #666;
+            line-height: 1.5;
+            color: #555;
+            margin-bottom: 30px;
         }
         
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            flex: 1;
+        .tech-stack {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         
-        .metrics-col {
+        .tech-tag {
+            background-color: #1A1A1A;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .right-col {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 10px;
+            gap: 25px;
         }
         
-        .metric-card {
-            background-color: #FFFFFF;
-            padding: 16px;
-            border-left: 8px solid #1A1A1A;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        .metric-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
         }
         
-        .metric-card.highlight {
-            border-left-color: #FF4B4B;
+        .metric-box {
+            background-color: white;
+            padding: 30px;
+            text-align: center;
         }
         
         .metric-value {
-            font-size: 64px;
+            font-size: 48px;
             font-weight: 900;
+            color: #0068C9;
             line-height: 1;
-            margin-bottom: 10px;
-            color: #1A1A1A;
         }
         
-        .highlight .metric-value {
+        .metric-value.highlight {
             color: #FF4B4B;
         }
         
         .metric-label {
-            font-size: 18px;
+            font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            color: #888;
+            margin-top: 10px;
             font-weight: 700;
-            color: #666;
         }
         
         .metric-desc {
-            font-size: 16px;
-            margin-top: 10px;
-            color: #888;
-            font-weight: 300;
-        }
-        
-        .image-col {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .image-container {
-            background-color: #FFFFFF;
-            padding: 20px;
-            border: 1px solid #E0E0E0;
-            width: 100%;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        
-        .method-box {
-            margin-top: 10px;
-            background-color: #E0E0E0;
-            padding: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .method-item {
-            font-size: 14px;
-            font-weight: 700;
-            color: #333;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <div class="slide-container">
-        <div class="header">
-            <div class="section-label">Solução</div>
-            <h1>MODELO PREDITIVO</h1>
-            <div class="subtitle">Random Forest Classifier com SMOTE</div>
+        <div class="left-col">
+            <div class="section-label">Machine Learning</div>
+            <h1>MODELO PREDITIVO DE RISCO</h1>
+            
+            <p class="description">
+                Desenvolvemos um modelo de classificação usando <strong>Random Forest</strong> com técnica de balanceamento <strong>SMOTE</strong>, treinado com dados dos 3 anos (2022-2024).
+            </p>
+            
+            <div class="tech-stack">
+                <span class="tech-tag">Random Forest</span>
+                <span class="tech-tag">SMOTE</span>
+                <span class="tech-tag">Scikit-learn</span>
+            </div>
         </div>
         
-        <div class="content-grid">
-            <div class="metrics-col">
-                <div class="metric-card highlight">
-                    <div class="metric-value">60%</div>
-                    <div class="metric-label">Recall (Sensibilidade)</div>
-                    <div class="metric-desc">Capacidade de identificar alunos em risco real.</div>
+        <div class="right-col">
+            <div class="metric-row">
+                <div class="metric-box">
+                    <div class="metric-value highlight">65.4%</div>
+                    <div class="metric-label">Recall</div>
+                    <div class="metric-desc">Alunos em risco identificados</div>
                 </div>
-                
-                <div class="metric-card">
-                    <div class="metric-value">82.5%</div>
+                <div class="metric-box">
+                    <div class="metric-value">87.8%</div>
                     <div class="metric-label">AUC-ROC</div>
-                    <div class="metric-desc">Qualidade global de discriminação do modelo.</div>
+                    <div class="metric-desc">Capacidade discriminativa</div>
                 </div>
             </div>
-            
-            <div class="image-col">
-                <div class="image-container">
-                    <img src="/home/ubuntu/datathon_passos_magicos/images/modelo_preditivo.png" alt="Matriz de Confusão">
+            <div class="metric-row">
+                <div class="metric-box">
+                    <div class="metric-value">85.6%</div>
+                    <div class="metric-label">Acurácia</div>
+                    <div class="metric-desc">Predições corretas</div>
                 </div>
-                
-                <div class="method-box">
-                    <div class="method-item">ALGORITMO: RANDOM FOREST</div>
-                    <div class="method-item">THRESHOLD: 0.30</div>
-                    <div class="method-item">TARGET: DEFASAGEM > 0</div>
+                <div class="metric-box">
+                    <div class="metric-value">37.4%</div>
+                    <div class="metric-label">F1-Score</div>
+                    <div class="metric-desc">Equilíbrio precisão/recall</div>
                 </div>
             </div>
         </div>

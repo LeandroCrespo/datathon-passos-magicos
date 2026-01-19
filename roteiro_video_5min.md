@@ -10,10 +10,10 @@
 |:---:|---|:---:|---|
 | 1 | Capa | 15s | Título e contexto do projeto. |
 | 2 | O Desafio | 30s | Objetivo: prever risco de defasagem precocemente. |
-| 3 | Os Dados | 30s | Dataset PEDE 2022-2024 (3 anos, +3000 registros). |
+| 3 | Os Dados | 30s | Dataset PEDE 2022-2024 (3 anos, ~3000 registros). |
 | 4 | Descobertas | 45s | Aumento de alunos na fase correta, Engajamento e Ponto de Virada. |
-| 5 | Modelo | 45s | Random Forest com SMOTE, Recall 60%, AUC-ROC 82.5%. |
-| 6 | Features | 45s | IAN (25%) e Média (13%) como principais preditores. |
+| 5 | Modelo | 45s | Random Forest com SMOTE, Recall 65%, AUC-ROC 88%. |
+| 6 | Features | 45s | IAN (30%) e IPS (12%) como principais preditores. |
 | 7 | Streamlit | 30s | Ferramenta para uso da equipe pedagógica. |
 | 8 | Recomendações | 30s | Ações para alunos (suporte) e ONG (engajamento). |
 | 9 | Conclusão | 15s | Resumo do valor entregue. |
@@ -31,16 +31,16 @@
 > "O grande desafio que enfrentamos foi: como usar os dados para agir antes que o aluno reprove ou evada? Nosso objetivo foi claro: analisar o histórico educacional e construir uma ferramenta capaz de alertar a equipe pedagógica sobre alunos em risco, permitindo intervenções preventivas."
 
 **(Slide 3: Os Dados - 30s)**
-> "Trabalhamos com a Pesquisa de Desenvolvimento Educacional (PEDE) de 2022, 2023 e 2024. Analisamos mais de 3.000 registros de alunos, cruzando indicadores acadêmicos como IDA, psicossociais como IPS, e de engajamento como IEG, para entender a trajetória de desenvolvimento."
+> "Trabalhamos com a Pesquisa de Desenvolvimento Educacional (PEDE) de 2022, 2023 e 2024. Analisamos cerca de 3.000 registros de alunos, cruzando indicadores acadêmicos como IDA, psicossociais como IPS, e de engajamento como IEG, para entender a trajetória de desenvolvimento."
 
 **(Slide 4: Principais Descobertas - 45s)**
 > "Nossa análise exploratória trouxe insights importantes. Primeiro, houve um aumento significativo de alunos na fase correta: de 29% em 2022 para 42% em 2024. Isso mostra que as ações da ONG estão ajudando os alunos a se alinharem com a fase ideal para sua idade. Segundo, descobrimos que o Engajamento é o motor do desenvolvimento. E terceiro, o Ponto de Virada se mostrou um marcador crucial de recuperação."
 
 **(Slide 5: Modelo Preditivo - 45s)**
-> "Desenvolvemos um modelo de Machine Learning usando Random Forest com técnica de balanceamento SMOTE. O modelo alcançou 60% de Recall, ou seja, consegue identificar 6 em cada 10 alunos que realmente estão em risco. O AUC-ROC de 82,5% indica boa capacidade de discriminação. Priorizamos o Recall porque, neste contexto, é mais importante identificar o máximo de alunos em risco possível."
+> "Desenvolvemos um modelo de Machine Learning usando Random Forest com técnica de balanceamento SMOTE, treinado com dados dos 3 anos. O modelo alcançou 65% de Recall, ou seja, consegue identificar aproximadamente 2 em cada 3 alunos que realmente estão em risco. O AUC-ROC de 88% indica excelente capacidade de discriminação. Priorizamos o Recall porque, neste contexto, é mais importante identificar o máximo de alunos em risco possível."
 
 **(Slide 6: Features Mais Importantes - 45s)**
-> "Mas o que define esse risco? O modelo nos mostrou que a Adequação ao Nível, o IAN, é responsável por 25% da decisão, seguida pela Média Geral com 13% e pelo Ponto de Virada com 11%. Isso confirma que a defasagem idade-série é o sinal de alerta mais forte, mas que o comportamento e a virada de chave também são fundamentais."
+> "Mas o que define esse risco? O modelo nos mostrou que a Adequação ao Nível, o IAN, é responsável por 30% da decisão, seguida pelo indicador Psicossocial com 12% e pela Média Geral com 10%. Isso confirma que a defasagem idade-série é o sinal de alerta mais forte, mas que os aspectos emocionais e sociais também são fundamentais."
 
 **(Slide 7: Aplicação Streamlit - 30s)**
 > "Para colocar essa inteligência na mão da equipe, criamos uma aplicação interativa. Nela, é possível visualizar a evolução da ONG e, principalmente, fazer a predição de risco para novos alunos em tempo real, democratizando o acesso à ciência de dados."
