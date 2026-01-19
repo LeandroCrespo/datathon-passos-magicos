@@ -15,6 +15,11 @@ import pickle
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import os
+from pathlib import Path
+
+# Diretório base (onde está o app.py)
+BASE_DIR = Path(__file__).parent
 
 # Configuração da página
 st.set_page_config(
@@ -66,13 +71,13 @@ st.markdown("""
 def carregar_modelo():
     """Carrega o modelo treinado e o scaler"""
     try:
-        with open('modelo_risco_defasagem.pkl', 'rb') as f:
+        with open(BASE_DIR / 'modelo_risco_defasagem.pkl', 'rb') as f:
             modelo = pickle.load(f)
-        with open('scaler.pkl', 'rb') as f:
+        with open(BASE_DIR / 'scaler.pkl', 'rb') as f:
             scaler = pickle.load(f)
-        with open('features.txt', 'r') as f:
+        with open(BASE_DIR / 'features.txt', 'r') as f:
             features = f.read().strip().split('\n')
-        with open('threshold.txt', 'r') as f:
+        with open(BASE_DIR / 'threshold.txt', 'r') as f:
             threshold = float(f.read().strip())
         return modelo, scaler, features, threshold
     except Exception as e:
@@ -83,7 +88,7 @@ def carregar_modelo():
 def carregar_dados():
     """Carrega os dados do PEDE"""
     try:
-        xlsx = pd.ExcelFile('BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx')
+        xlsx = pd.ExcelFile(BASE_DIR / 'BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx')
         df_2022 = pd.read_excel(xlsx, sheet_name='PEDE2022')
         df_2023 = pd.read_excel(xlsx, sheet_name='PEDE2023')
         df_2024 = pd.read_excel(xlsx, sheet_name='PEDE2024')
@@ -121,20 +126,19 @@ def preparar_dados(df, ano):
 
 def prever_risco(modelo, scaler, features, threshold, indicadores):
     """Realiza a predição de risco para um aluno"""
-    # Criar features derivadas
-    features_base = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV', 'IAN']
+    # Features do modelo: ['IAN', 'IDA', 'IEG', 'IAA', 'IPS', 'IPP', 'IPV', 'INDE', 'MEDIA_INDICADORES']
+    # Criar features base
+    features_base = ['IAN', 'IDA', 'IEG', 'IAA', 'IPS', 'IPP', 'IPV', 'INDE']
     valores_base = [indicadores[f] for f in features_base]
     
+    # Calcular média dos indicadores (feature derivada)
     media_ind = np.mean(valores_base)
-    std_ind = np.std(valores_base)
-    gap_ida_iaa = indicadores['IDA'] - indicadores['IAA']
-    ratio_ieg_ida = indicadores['IEG'] / (indicadores['IDA'] + 0.1)
     
-    # Criar array de features
+    # Criar array de features na ordem correta
     X = np.array([[
-        indicadores['IDA'], indicadores['IEG'], indicadores['IAA'],
-        indicadores['IPS'], indicadores['IPV'], indicadores['IAN'],
-        media_ind, std_ind, gap_ida_iaa, ratio_ieg_ida
+        indicadores['IAN'], indicadores['IDA'], indicadores['IEG'], indicadores['IAA'],
+        indicadores['IPS'], indicadores['IPP'], indicadores['IPV'], indicadores['INDE'],
+        media_ind
     ]])
     
     # Normalizar
@@ -201,6 +205,7 @@ if pagina == "🏠 Início":
     | **IEG** | Indicador de Engajamento |
     | **IAA** | Indicador de Autoavaliação |
     | **IPS** | Indicador Psicossocial |
+    | **IPP** | Indicador Psicopedagógico |
     | **IPV** | Indicador de Ponto de Virada |
     | **INDE** | Índice de Desenvolvimento Educacional (global) |
     """)
@@ -301,23 +306,25 @@ elif pagina == "🔮 Predição de Risco":
         col1, col2, col3 = st.columns(3)
         
         with col1:
+            ian = st.slider("IAN - Adequação ao Nível", 0.0, 10.0, 5.0, 0.1)
             ida = st.slider("IDA - Desempenho Acadêmico", 0.0, 10.0, 5.0, 0.1)
             ieg = st.slider("IEG - Engajamento", 0.0, 10.0, 5.0, 0.1)
         
         with col2:
             iaa = st.slider("IAA - Autoavaliação", 0.0, 10.0, 5.0, 0.1)
             ips = st.slider("IPS - Psicossocial", 0.0, 10.0, 5.0, 0.1)
+            ipp = st.slider("IPP - Psicopedagógico", 0.0, 10.0, 5.0, 0.1)
         
         with col3:
             ipv = st.slider("IPV - Ponto de Virada", 0.0, 10.0, 5.0, 0.1)
-            ian = st.slider("IAN - Adequação ao Nível", 0.0, 10.0, 5.0, 0.1)
+            inde = st.slider("INDE - Índice de Desenvolvimento", 0.0, 10.0, 5.0, 0.1)
         
         st.divider()
         
         if st.button("🔍 Analisar Risco", type="primary", use_container_width=True):
             indicadores = {
-                'IDA': ida, 'IEG': ieg, 'IAA': iaa,
-                'IPS': ips, 'IPV': ipv, 'IAN': ian
+                'IAN': ian, 'IDA': ida, 'IEG': ieg, 'IAA': iaa,
+                'IPS': ips, 'IPP': ipp, 'IPV': ipv, 'INDE': inde
             }
             
             prob, em_risco = prever_risco(modelo, scaler, features, threshold, indicadores)
@@ -467,16 +474,17 @@ elif pagina == "📈 Sobre o Modelo":
     O gráfico abaixo mostra quais indicadores têm maior influência na predição de risco:
     """)
     
-    # Gráfico de importância
+    # Gráfico de importância (valores do modelo treinado)
     features_imp = {
-        'IAN': 0.38,
-        'MEDIA_INDICADORES': 0.112,
-        'IAA': 0.105,
-        'IEG': 0.101,
-        'IPS': 0.086,
-        'IPV': 0.083,
-        'STD_INDICADORES': 0.073,
-        'IDA': 0.061
+        'IAN': 0.371,
+        'IPS': 0.113,
+        'MEDIA_INDICADORES': 0.096,
+        'IAA': 0.094,
+        'IPV': 0.068,
+        'INDE': 0.066,
+        'IDA': 0.065,
+        'IPP': 0.064,
+        'IEG': 0.062
     }
     
     fig = px.bar(
@@ -494,9 +502,9 @@ elif pagina == "📈 Sobre o Modelo":
     st.markdown("""
     ### Interpretação
     
-    - **IAN** é o indicador mais importante, o que faz sentido pois mede diretamente a adequação ao nível
+    - **IAN** é o indicador mais importante (37%), pois mede diretamente a adequação ao nível
+    - **IPS** (Psicossocial) é o segundo mais importante (11%), indicando a relevância dos aspectos emocionais
     - **MEDIA_INDICADORES** captura o desempenho geral do aluno
-    - **IPV** (Ponto de Virada) indica momentos críticos de transformação
     
     ### Limitações
     
