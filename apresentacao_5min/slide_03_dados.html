@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #F5F5F5;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            display: flex;
+            flex-direction: column;
+            padding: 80px;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+        }
+        
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF4B4B;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            flex: 1;
+        }
+        
+        .years-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .year-card {
+            display: flex;
+            align-items: center;
+            border-top: 4px solid #1A1A1A;
+            padding-top: 20px;
+        }
+        
+        .year-label {
+            font-size: 24px;
+            font-weight: 900;
+            width: 100px;
+        }
+        
+        .year-stats {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: #0068C9;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        
+        .indicators-section h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .indicator {
+            display: flex;
+            align-items: center;
+        }
+        
+        .indicator-code {
+            font-size: 18px;
+            font-weight: 900;
+            color: #FF4B4B;
+            width: 50px;
+        }
+        
+        .indicator-name {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .total-box {
+            margin-top: 30px;
+            background-color: #1A1A1A;
+            color: #F5F5F5;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .total-label {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .total-value {
+            font-size: 36px;
+            font-weight: 900;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="section-label">Os Dados</div>
+            <h1>PESQUISA DE DESENVOLVIMENTO EDUCACIONAL (PEDE)</h1>
+        </div>
+        
+        <div class="content-grid">
+            <div class="years-section">
+                <div class="year-card">
+                    <span class="year-label">2022</span>
+                    <div class="year-stats">
+                        <div class="stat">
+                            <span class="stat-value">860</span>
+                            <span class="stat-label">Alunos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">42</span>
+                            <span class="stat-label">Variáveis</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="year-card">
+                    <span class="year-label">2023</span>
+                    <div class="year-stats">
+                        <div class="stat">
+                            <span class="stat-value">1.014</span>
+                            <span class="stat-label">Alunos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">48</span>
+                            <span class="stat-label">Variáveis</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="year-card">
+                    <span class="year-label">2024</span>
+                    <div class="year-stats">
+                        <div class="stat">
+                            <span class="stat-value">1.156</span>
+                            <span class="stat-label">Alunos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">50</span>
+                            <span class="stat-label">Variáveis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="indicators-section">
+                <h2>Indicadores Principais</h2>
+                <div class="indicator-grid">
+                    <div class="indicator">
+                        <span class="indicator-code">IAN</span>
+                        <span class="indicator-name">Adequação ao Nível</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-code">IDA</span>
+                        <span class="indicator-name">Desempenho Acadêmico</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-code">IEG</span>
+                        <span class="indicator-name">Engajamento</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-code">IAA</span>
+                        <span class="indicator-name">Autoavaliação</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-code">IPS</span>
+                        <span class="indicator-name">Psicossocial</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-code">IPP</span>
+                        <span class="indicator-name">Psicopedagógico</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-code">IPV</span>
+                        <span class="indicator-name">Ponto de Virada</span>
+                    </div>
+                    <div class="indicator">
+                        <span class="indicator-code">INDE</span>
+                        <span class="indicator-name">Índice Global</span>
+                    </div>
+                </div>
+                
+                <div class="total-box">
+                    <span class="total-label">Total de Registros Analisados</span>
+                    <span class="total-value">3.030</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+{
+  "project_info": {
+    "title": "Datathon FIAP - Passos Mágicos",
+    "created": 1768843268.8181021,
+    "last_updated": 1768843420.5758047,
+    "total_slides": 10
+  },
+  "slides": {
+    "slide_01_capa": "edited",
+    "slide_02_desafio": "edited",
+    "slide_03_dados": "edited",
+    "slide_04_descobertas": "edited",
+    "slide_05_modelo": "edited",
+    "slide_06_features": "edited",
+    "slide_07_streamlit": "edited",
+    "slide_08_recomendacoes": "edited",
+    "slide_09_conclusao": "edited",
+    "slide_10_obrigado": "edited"
+  },
+  "outline": [
+    {
+      "id": "slide_01_capa",
+      "title": "Datathon FIAP - Passos Mágicos",
+      "summary": "Slide de abertura com título do projeto: Modelo Preditivo de Risco de Defasagem Escolar.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_02_desafio",
+      "title": "O Desafio",
+      "summary": "Objetivo do projeto: identificar precocemente alunos com risco de defasagem escolar usando dados.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_03_dados",
+      "title": "Os Dados",
+      "summary": "Dataset PEDE 2022-2024 com mais de 1000 alunos e indicadores como IAN, IDA, IEG, IAA, IPS, IPP, IPV.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_04_descobertas",
+      "title": "Principais Descobertas",
+      "summary": "Redução de 17% na defasagem, Engajamento como motor do desenvolvimento, Ponto de Virada como fator de recuperação.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_05_modelo",
+      "title": "Modelo Preditivo",
+      "summary": "Random Forest com Recall de 87%, AUC-ROC de 83%, threshold otimizado em 0.35.",
+      "image_plan": "/home/ubuntu/datathon_passos_magicos/images/evolucao_defasagem.png - The image shows the evolution of defasagem over time, directly supporting the slide's content about the reduction in average defasagem.",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_06_features",
+      "title": "Features Mais Importantes",
+      "summary": "IAN (34%), Média dos Indicadores (16%), IPV (10%), STD (9%), IEG (8%).",
+      "image_plan": "/home/ubuntu/datathon_passos_magicos/images/distribuicao_pedras.png - The image displays the distribution of 'Pedras' (Quartzo, Ágata, Ametista, Topázio) by year, which directly relates to the slide's content about the classification system and its evolution.",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_07_streamlit",
+      "title": "Aplicação Streamlit",
+      "summary": "Ferramenta interativa com dashboard, predição de risco e recomendações de intervenção.",
+      "image_plan": "/home/ubuntu/datathon_passos_magicos/images/matriz_correlacao.png - The image is a correlation matrix of indicators, which directly supports the slide's content about correlations between indicators, especially IEG.",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_08_recomendacoes",
+      "title": "Recomendações",
+      "summary": "Ações para alunos em risco e para a organização baseadas nos insights da análise.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_09_conclusao",
+      "title": "Conclusão",
+      "summary": "Valor entregue: análise completa, modelo de alta sensibilidade, ferramenta prática.",
+      "image_plan": "/home/ubuntu/datathon_passos_magicos/images/modelo_preditivo.png - The image displays a confusion matrix and feature importance for a Random Forest model, which aligns with the slide's content about the predictive model and its metrics.",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_10_obrigado",
+      "title": "Obrigado!",
+      "summary": "Slide de encerramento com agradecimentos e links do projeto.",
+      "image_plan": "/home/ubuntu/datathon_passos_magicos/images/modelo_preditivo.png - The image shows feature importance, with IAN as the most important predictor, directly supporting the slide's content about the most important features.",
+      "slide_template_key": ""
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #F5F5F5;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 80px 0 80px;
+        }
+        
+        .header {
+            margin-bottom: 60px;
+        }
+        
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF4B4B;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+        
+        .findings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+            padding-bottom: 80px;
+        }
+        
+        .finding-card {
+            display: flex;
+            flex-direction: column;
+            border-top: 8px solid;
+            padding-top: 30px;
+        }
+        
+        .card-green { border-color: #2ECC71; }
+        .card-blue { border-color: #0068C9; }
+        .card-black { border-color: #1A1A1A; }
+        
+        .big-number {
+            font-size: 80px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 10px;
+            letter-spacing: -3px;
+        }
+        
+        .text-green { color: #2ECC71; }
+        .text-blue { color: #0068C9; }
+        .text-black { color: #1A1A1A; }
+        
+        .finding-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        
+        .finding-desc {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .icon-area {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="section-label">Análise Exploratória</div>
+            <h1>PRINCIPAIS DESCOBERTAS</h1>
+        </div>
+        
+        <div class="findings-grid">
+            <div class="finding-card card-green">
+                <div class="icon-area text-green"><i class="fas fa-arrow-up"></i></div>
+                <div class="big-number text-green">42%</div>
+                <div class="finding-title">Alunos na Fase Correta</div>
+                <div class="finding-desc">
+                    Em 2024, 42% dos alunos estão na fase ideal para sua idade, um aumento significativo em relação aos 29% de 2022.
+                </div>
+            </div>
+            
+            <div class="finding-card card-blue">
+                <div class="icon-area text-blue"><i class="fas fa-cogs"></i></div>
+                <div class="finding-title text-blue">Motor do Desenvolvimento</div>
+                <div class="finding-desc">
+                    O <strong>Engajamento (IEG)</strong> apresentou a maior correlação positiva com o desempenho global (INDE), sendo o principal impulsionador.
+                </div>
+            </div>
+            
+            <div class="finding-card card-black">
+                <div class="icon-area text-black"><i class="fas fa-random"></i></div>
+                <div class="finding-title">Fator de Recuperação</div>
+                <div class="finding-desc">
+                    O <strong>Ponto de Virada (IPV)</strong> identifica alunos que superaram dificuldades iniciais, servindo como indicador chave de resiliência.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

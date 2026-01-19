@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #F5F5F5;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 80px 40px; /* keep top padding, reduce bottom */
+        }
+        
+        .header {
+            margin-bottom: 30px; /* reduced to save height */
+        }
+        
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF4B4B;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            color: #666;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px; /* slightly reduced gap */
+            flex: 1;
+        }
+        
+        .feature-card {
+            background-color: #FFFFFF;
+            padding: 24px; /* reduced padding */
+            border-top: 6px solid #1A1A1A;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-card.accent {
+            border-color: #0068C9;
+        }
+        
+        .feature-card.highlight {
+            border-color: #FF4B4B;
+        }
+        
+        .icon-box {
+            font-size: 48px;
+            margin-bottom: 16px; /* reduced spacing */
+            color: #1A1A1A;
+        }
+        
+        .accent .icon-box { color: #0068C9; }
+        .highlight .icon-box { color: #FF4B4B; }
+        
+        h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px; /* reduced */
+            text-transform: uppercase;
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .tech-stack {
+            margin-top: 30px; /* reduced */
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            border-top: 1px solid #DDD;
+            padding-top: 16px; /* reduced */
+        }
+        
+        .tech-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #888;
+        }
+        
+        .tech-item {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="section-label">Ferramenta Interativa</div>
+            <h1>APLICAÇÃO STREAMLIT</h1>
+            <div class="subtitle">Democratizando o acesso aos dados e predições</div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+                <h3>Dashboard</h3>
+                <p>Visualização interativa dos indicadores históricos e evolução dos alunos ao longo dos anos.</p>
+            </div>
+            
+            <div class="feature-card accent">
+                <div class="icon-box"><i class="fas fa-brain"></i></div>
+                <h3>Predição</h3>
+                <p>Interface simples para inserir dados de novos alunos e receber a avaliação de risco em tempo real.</p>
+            </div>
+            
+            <div class="feature-card highlight">
+                <div class="icon-box"><i class="fas fa-clipboard-list"></i></div>
+                <h3>Ação</h3>
+                <p>Recomendações automáticas de intervenção pedagógica baseadas no nível de risco identificado.</p>
+            </div>
+        </div>
+        
+        <div class="tech-stack">
+            <span class="tech-label">Tecnologias:</span>
+            <span class="tech-item">Python</span>
+            <span class="tech-item">Streamlit</span>
+            <span class="tech-item">Scikit-learn</span>
+            <span class="tech-item">Plotly</span>
+            <span class="tech-item">Pandas</span>
+        </div>
+    </div>
+</body>
+</html>

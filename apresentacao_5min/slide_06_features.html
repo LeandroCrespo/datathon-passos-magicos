@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #F5F5F5;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            padding: 80px 80px 0 80px;
+            gap: 80px;
+        }
+        
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF4B4B;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 40px;
+            letter-spacing: -2px;
+        }
+        
+        .insight-box {
+            border-left: 6px solid #1A1A1A;
+            padding-left: 30px;
+        }
+        
+        .insight-text {
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1.4;
+            color: #555;
+        }
+        
+        .highlight {
+            font-weight: 700;
+            color: #0068C9;
+        }
+        
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .bar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+        
+        .feature-name {
+            font-size: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .feature-value {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1A1A1A;
+        }
+        
+        .bar-bg {
+            width: 100%;
+            height: 12px;
+            background-color: #E0E0E0;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            background-color: #0068C9;
+        }
+        
+        .bar-fill.primary {
+            background-color: #FF4B4B;
+        }
+        
+        .feature-desc {
+            font-size: 14px;
+            color: #888;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="left-col">
+            <div class="section-label">Features Mais Importantes</div>
+            <h1>O QUE DEFINE O RISCO?</h1>
+            
+            <div class="insight-box">
+                <p class="insight-text">
+                    O indicador de <span class="highlight">Adequação ao Nível (IAN)</span> é o preditor dominante, responsável por 25% da decisão do modelo.
+                </p>
+            </div>
+        </div>
+        
+        <div class="right-col">
+            <div class="chart-container">
+                <div class="bar-item">
+                    <div class="bar-header">
+                        <span class="feature-name">1. IAN (Adequação ao Nível)</span>
+                        <span class="feature-value" style="color: #FF4B4B;">25.1%</span>
+                    </div>
+                    <div class="bar-bg">
+                        <div class="bar-fill primary" style="width: 100%;"></div>
+                    </div>
+                    <span class="feature-desc">Mede a defasagem idade-série direta.</span>
+                </div>
+                
+                <div class="bar-item">
+                    <div class="bar-header">
+                        <span class="feature-name">2. Média Geral</span>
+                        <span class="feature-value">13.1%</span>
+                    </div>
+                    <div class="bar-bg">
+                        <div class="bar-fill" style="width: 52%;"></div>
+                    </div>
+                    <span class="feature-desc">Desempenho global em todos os indicadores.</span>
+                </div>
+                
+                <div class="bar-item">
+                    <div class="bar-header">
+                        <span class="feature-name">3. IPV (Ponto de Virada)</span>
+                        <span class="feature-value">10.6%</span>
+                    </div>
+                    <div class="bar-bg">
+                        <div class="bar-fill" style="width: 42%;"></div>
+                    </div>
+                    <span class="feature-desc">Indicador de superação e mudança de atitude.</span>
+                </div>
+                
+                <div class="bar-item">
+                    <div class="bar-header">
+                        <span class="feature-name">4. INDE (Índice Global)</span>
+                        <span class="feature-value">10.0%</span>
+                    </div>
+                    <div class="bar-bg">
+                        <div class="bar-fill" style="width: 40%;"></div>
+                    </div>
+                    <span class="feature-desc">Índice de Desenvolvimento Educacional global.</span>
+                </div>
+                
+                <div class="bar-item">
+                    <div class="bar-header">
+                        <span class="feature-name">5. IEG (Engajamento)</span>
+                        <span class="feature-value">9.2%</span>
+                    </div>
+                    <div class="bar-bg">
+                        <div class="bar-fill" style="width: 37%;"></div>
+                    </div>
+                    <span class="feature-desc">Nível de participação e entrega de tarefas.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

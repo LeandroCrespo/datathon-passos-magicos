@@ -453,13 +453,13 @@ elif pagina == "📈 Sobre o Modelo":
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        st.metric("Recall", "87.06%", help="Capacidade de identificar alunos em risco")
+        st.metric("Recall", "60.00%", help="Capacidade de identificar alunos em risco")
     with col2:
-        st.metric("Precisão", "35.41%", help="Proporção de predições corretas de risco")
+        st.metric("Precisão", "23.53%", help="Proporção de predições corretas de risco")
     with col3:
-        st.metric("F1-Score", "50.34%", help="Média harmônica entre precisão e recall")
+        st.metric("F1-Score", "33.80%", help="Média harmônica entre precisão e recall")
     with col4:
-        st.metric("AUC-ROC", "83.25%", help="Área sob a curva ROC")
+        st.metric("AUC-ROC", "82.50%", help="Área sob a curva ROC")
     
     st.markdown("""
     ### Importância das Features
@@ -469,16 +469,15 @@ elif pagina == "📈 Sobre o Modelo":
     
     # Gráfico de importância
     features_imp = {
-        'IAN': 0.34,
-        'MEDIA_INDICADORES': 0.16,
-        'IPV': 0.10,
-        'STD_INDICADORES': 0.09,
-        'IEG': 0.08,
-        'RATIO_IEG_IDA': 0.07,
-        'GAP_IDA_IAA': 0.06,
-        'IDA': 0.05,
-        'IPS': 0.03,
-        'IAA': 0.02
+        'IAN': 0.251,
+        'MEDIA_INDICADORES': 0.131,
+        'IPV': 0.106,
+        'INDE': 0.100,
+        'IEG': 0.092,
+        'IDA': 0.075,
+        'IPP': 0.070,
+        'IPS': 0.059,
+        'IAA': 0.054
     }
     
     fig = px.bar(

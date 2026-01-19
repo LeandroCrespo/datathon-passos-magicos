@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #1A1A1A;
+            font-family: 'Inter', sans-serif;
+            color: #F5F5F5;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            padding: 80px;
+            gap: 80px;
+        }
+        
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .right-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid #333;
+            padding-left: 80px;
+        }
+        
+        h1 {
+            font-size: 96px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 40px;
+            color: #F5F5F5;
+            line-height: 1;
+        }
+        
+        .quote-box {
+            margin-bottom: 60px;
+        }
+        
+        .quote-text {
+            font-size: 32px;
+            font-weight: 300;
+            line-height: 1.4;
+            color: #E0E0E0;
+        }
+        
+        .quote-accent {
+            color: #0068C9;
+            font-weight: 700;
+        }
+        
+        .links-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .link-item {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            color: #AAAAAA;
+        }
+        
+        .link-icon {
+            margin-right: 15px;
+            font-size: 24px;
+            color: #F5F5F5;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .ack-section {
+            margin-bottom: 50px;
+        }
+        
+        .ack-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF4B4B;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .ack-list {
+            list-style: none;
+        }
+        
+        .ack-item {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bullet {
+            width: 8px;
+            height: 8px;
+            background-color: #0068C9;
+            margin-right: 15px;
+        }
+        
+        .footer-logo {
+            margin-top: auto;
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="left-col">
+            <div>
+                <h1>OBRIGADO!</h1>
+                <div class="quote-box">
+                    <p class="quote-text">
+                        "Transformando dados em <span class="quote-accent">oportunidades</span>, e oportunidades em <span class="quote-accent">vidas transformadas</span>."
+                    </p>
+                </div>
+            </div>
+            
+            <div class="links-area">
+                <div class="link-item">
+                    <i class="fab fa-github link-icon"></i>
+                    github.com/LeandroCrespo/datathon-passos-magicos
+                </div>
+                <div class="link-item">
+                    <i class="fas fa-laptop-code link-icon"></i>
+                    Streamlit App
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-col">
+            <div class="ack-section">
+                <div class="ack-title">AGRADECIMENTOS</div>
+                <ul class="ack-list">
+                    <li class="ack-item">
+                        <div class="bullet"></div>
+                        Associação Passos Mágicos
+                    </li>
+                    <li class="ack-item">
+                        <div class="bullet"></div>
+                        FIAP
+                    </li>
+                    <li class="ack-item">
+                        <div class="bullet"></div>
+                        Professores e Mentores
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="ack-section">
+                <div class="ack-title">EQUIPE</div>
+                <ul class="ack-list">
+                    <li class="ack-item">
+                        <div class="bullet" style="background-color: #FF4B4B;"></div>
+                        Leandro Leme Crespo
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="footer-logo">
+                DATATHON 2025
+            </div>
+        </div>
+    </div>
+</body>
+</html>

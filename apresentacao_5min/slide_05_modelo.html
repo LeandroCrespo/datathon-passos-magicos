@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #F5F5F5;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 80px 0 80px;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+        }
+        
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF4B4B;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            color: #666;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+        }
+        
+        .metrics-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .metric-card {
+            background-color: #FFFFFF;
+            padding: 16px;
+            border-left: 8px solid #1A1A1A;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .metric-card.highlight {
+            border-left-color: #FF4B4B;
+        }
+        
+        .metric-value {
+            font-size: 64px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 10px;
+            color: #1A1A1A;
+        }
+        
+        .highlight .metric-value {
+            color: #FF4B4B;
+        }
+        
+        .metric-label {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #666;
+        }
+        
+        .metric-desc {
+            font-size: 16px;
+            margin-top: 10px;
+            color: #888;
+            font-weight: 300;
+        }
+        
+        .image-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-container {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border: 1px solid #E0E0E0;
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .method-box {
+            margin-top: 10px;
+            background-color: #E0E0E0;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .method-item {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="section-label">Solução</div>
+            <h1>MODELO PREDITIVO</h1>
+            <div class="subtitle">Random Forest Classifier com SMOTE</div>
+        </div>
+        
+        <div class="content-grid">
+            <div class="metrics-col">
+                <div class="metric-card highlight">
+                    <div class="metric-value">60%</div>
+                    <div class="metric-label">Recall (Sensibilidade)</div>
+                    <div class="metric-desc">Capacidade de identificar alunos em risco real.</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-value">82.5%</div>
+                    <div class="metric-label">AUC-ROC</div>
+                    <div class="metric-desc">Qualidade global de discriminação do modelo.</div>
+                </div>
+            </div>
+            
+            <div class="image-col">
+                <div class="image-container">
+                    <img src="/home/ubuntu/datathon_passos_magicos/images/modelo_preditivo.png" alt="Matriz de Confusão">
+                </div>
+                
+                <div class="method-box">
+                    <div class="method-item">ALGORITMO: RANDOM FOREST</div>
+                    <div class="method-item">THRESHOLD: 0.30</div>
+                    <div class="method-item">TARGET: DEFASAGEM > 0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

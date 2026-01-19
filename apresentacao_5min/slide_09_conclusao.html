@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        .slide-container {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #F5F5F5;
+            font-family: 'Inter', sans-serif;
+            color: #1A1A1A;
+            display: flex;
+            flex-direction: column;
+            padding: 80px;
+        }
+        
+        .header {
+            margin-bottom: 50px;
+        }
+        
+        .section-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #FF4B4B;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            color: #666;
+        }
+        
+        .value-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+        }
+        
+        .value-item {
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-left: 6px solid #1A1A1A;
+            display: flex;
+            align-items: flex-start;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        
+        .value-item:nth-child(2) { border-color: #FF4B4B; }
+        .value-item:nth-child(3) { border-color: #0068C9; }
+        .value-item:nth-child(4) { border-color: #1A1A1A; }
+        
+        .icon-wrapper {
+            font-size: 32px;
+            margin-right: 25px;
+            margin-top: 5px;
+            color: #333;
+        }
+        
+        .value-item:nth-child(2) .icon-wrapper { color: #FF4B4B; }
+        .value-item:nth-child(3) .icon-wrapper { color: #0068C9; }
+        
+        .text-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .item-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .item-desc {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.4;
+            color: #555;
+        }
+        
+        .highlight {
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <div class="header">
+            <div class="section-label">Conclusão</div>
+            <h1>VALOR ENTREGUE</h1>
+            <div class="subtitle">Transformando dados em impacto real</div>
+        </div>
+        
+        <div class="value-grid">
+            <div class="value-item">
+                <div class="icon-wrapper"><i class="fas fa-search"></i></div>
+                <div class="text-content">
+                    <div class="item-title">Diagnóstico Completo</div>
+                    <div class="item-desc">
+                        Análise profunda da evolução educacional de 2022 a 2024, identificando tendências e correlações.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="value-item">
+                <div class="icon-wrapper"><i class="fas fa-bullseye"></i></div>
+                <div class="text-content">
+                    <div class="item-title">Alta Precisão</div>
+                    <div class="item-desc">
+                        Modelo capaz de identificar <span class="highlight">87%</span> dos alunos em risco, permitindo intervenção preventiva.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="value-item">
+                <div class="icon-wrapper"><i class="fas fa-laptop-code"></i></div>
+                <div class="text-content">
+                    <div class="item-title">Ferramenta Prática</div>
+                    <div class="item-desc">
+                        Aplicação Streamlit pronta para uso, democratizando o acesso à inteligência de dados.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="value-item">
+                <div class="icon-wrapper"><i class="fas fa-lightbulb"></i></div>
+                <div class="text-content">
+                    <div class="item-title">Insights Acionáveis</div>
+                    <div class="item-desc">
+                        Recomendações estratégicas claras para maximizar o impacto social da Passos Mágicos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
