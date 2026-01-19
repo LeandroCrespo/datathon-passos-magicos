@@ -16,9 +16,9 @@ Preencha os campos:
 
 | Campo | Valor |
 |-------|-------|
-| **Repository** | `LeandroCrespo/bolao-copa-2026` |
+| **Repository** | `LeandroCrespo/datathon-passos-magicos` |
 | **Branch** | `main` |
-| **Main file path** | `datathon_passos_magicos/streamlit/app.py` |
+| **Main file path** | `streamlit/app.py` |
 
 ### 5. Deploy
 Clique em **"Deploy!"** e aguarde alguns minutos.
@@ -32,7 +32,7 @@ Você receberá uma URL pública no formato:
 ## Estrutura de Arquivos no Repositório
 
 ```
-datathon_passos_magicos/
+datathon-passos-magicos/
 ├── streamlit/
 │   ├── app.py                              # Aplicação principal
 │   ├── requirements.txt                    # Dependências
@@ -73,4 +73,4 @@ model_path = os.path.join(script_dir, 'modelo_risco_defasagem.pkl')
 ---
 
 ## Link do Repositório
-**https://github.com/LeandroCrespo/bolao-copa-2026**
+**https://github.com/LeandroCrespo/datathon-passos-magicos**
