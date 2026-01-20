@@ -1,34 +1,22 @@
 """
 Datathon FIAP - Passos Mágicos
-Aplicação Streamlit para Predição de Risco de Defasagem
+Dashboard de Análise e Predição de Risco de Defasagem
 
-Esta aplicação permite:
-1. Visualizar análises exploratórias dos dados
-2. Prever o risco de defasagem de alunos com base nos indicadores
-3. Explorar os insights do modelo preditivo
-
-Classificação de Risco (Metodologia Passos Mágicos):
-- Sem Risco: Aluno em fase ou adiantado (D >= 0)
-- Risco Moderado: Aluno 1-2 fases atrasado (0 > D >= -2)
-- Risco Severo: Aluno 3+ fases atrasado (D < -2)
+Autor: Leandro Leme Crespo
 """
 
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import pickle
 import os
-from pathlib import Path
-
-# Diretório base (onde está o app.py)
-BASE_DIR = Path(__file__).parent
 
 # Configuração da página
 st.set_page_config(
-    page_title="Passos Mágicos - Análise de Risco",
+    page_title="Datathon - Passos Mágicos",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -40,670 +28,426 @@ st.markdown("""
     .main-header {
         font-size: 2.5rem;
         font-weight: bold;
-        color: #1E3A5F;
+        color: #1E3A8A;
         text-align: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
     }
     .sub-header {
         font-size: 1.2rem;
-        color: #666;
+        color: #64748B;
         text-align: center;
         margin-bottom: 2rem;
     }
     .metric-card {
-        background-color: #f0f2f6;
+        background-color: #F8FAFC;
         border-radius: 10px;
         padding: 1rem;
-        text-align: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .risk-severe {
-        background-color: #8b1a1a;
-        border-left: 5px solid #e74c3c;
+    .risk-high {
+        background-color: #FEE2E2;
+        border-left: 4px solid #EF4444;
         padding: 1rem;
         border-radius: 5px;
-        color: white;
-    }
-    .risk-severe h3, .risk-severe p, .risk-severe strong {
-        color: white;
-    }
-    .risk-moderate {
-        background-color: #b8860b;
-        border-left: 5px solid #f39c12;
-        padding: 1rem;
-        border-radius: 5px;
-        color: white;
-    }
-    .risk-moderate h3, .risk-moderate p, .risk-moderate strong {
-        color: white;
     }
     .risk-low {
-        background-color: #1a5c2e;
-        border-left: 5px solid #2ecc71;
+        background-color: #DCFCE7;
+        border-left: 4px solid #22C55E;
         padding: 1rem;
         border-radius: 5px;
-        color: white;
-    }
-    .risk-low h3, .risk-low p, .risk-low strong {
-        color: white;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Funções auxiliares
+# Função para carregar dados
+@st.cache_data
+def carregar_dados():
+    """Carrega os dados do arquivo Excel"""
+    try:
+        # Tentar diferentes caminhos
+        paths = [
+            'data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx',
+            '../data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx',
+            '/home/ubuntu/datathon-passos-magicos/data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx'
+        ]
+        
+        for path in paths:
+            if os.path.exists(path):
+                xlsx = pd.ExcelFile(path)
+                all_data = []
+                for sheet in xlsx.sheet_names:
+                    df_year = pd.read_excel(xlsx, sheet_name=sheet)
+                    df_year.columns = [c.upper() for c in df_year.columns]
+                    if 'DEFAS' in df_year.columns:
+                        df_year = df_year.rename(columns={'DEFAS': 'DEFASAGEM'})
+                    df_year['ANO_PEDE'] = sheet.replace('PEDE', '')
+                    all_data.append(df_year)
+                return pd.concat(all_data, ignore_index=True)
+        
+        st.error("Arquivo de dados não encontrado!")
+        return None
+    except Exception as e:
+        st.error(f"Erro ao carregar dados: {e}")
+        return None
+
+# Função para carregar modelo
 @st.cache_resource
 def carregar_modelo():
-    """Carrega o modelo treinado e o scaler"""
+    """Carrega o modelo de ML treinado"""
     try:
-        with open(BASE_DIR / 'modelo_risco_defasagem.pkl', 'rb') as f:
-            modelo = pickle.load(f)
-        with open(BASE_DIR / 'scaler.pkl', 'rb') as f:
-            scaler = pickle.load(f)
-        with open(BASE_DIR / 'features.txt', 'r') as f:
-            features = f.read().strip().split(',')
-        # Carregar info do modelo se existir
-        try:
-            with open(BASE_DIR / 'modelo_info.pkl', 'rb') as f:
-                modelo_info = pickle.load(f)
-        except:
-            modelo_info = None
-        return modelo, scaler, features, modelo_info
+        paths = [
+            'streamlit/',
+            './',
+            '/home/ubuntu/datathon-passos-magicos/streamlit/'
+        ]
+        
+        for base_path in paths:
+            modelo_path = os.path.join(base_path, 'modelo_risco_defasagem.pkl')
+            if os.path.exists(modelo_path):
+                with open(modelo_path, 'rb') as f:
+                    modelo = pickle.load(f)
+                with open(os.path.join(base_path, 'scaler.pkl'), 'rb') as f:
+                    scaler = pickle.load(f)
+                with open(os.path.join(base_path, 'label_encoders.pkl'), 'rb') as f:
+                    le_dict = pickle.load(f)
+                with open(os.path.join(base_path, 'modelo_info.pkl'), 'rb') as f:
+                    info = pickle.load(f)
+                return modelo, scaler, le_dict, info
+        
+        return None, None, None, None
     except Exception as e:
         st.error(f"Erro ao carregar modelo: {e}")
         return None, None, None, None
 
-@st.cache_data
-def carregar_dados():
-    """Carrega os dados do PEDE"""
-    try:
-        # Tentar carregar arquivo único primeiro
-        df = pd.read_excel(BASE_DIR / 'BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx')
-        return df, None, None
-    except:
-        try:
-            xlsx = pd.ExcelFile(BASE_DIR / 'BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx')
-            df_2022 = pd.read_excel(xlsx, sheet_name='PEDE2022')
-            df_2023 = pd.read_excel(xlsx, sheet_name='PEDE2023')
-            df_2024 = pd.read_excel(xlsx, sheet_name='PEDE2024')
-            return df_2022, df_2023, df_2024
-        except:
-            return None, None, None
-
-def prever_risco(modelo, scaler, features, indicadores):
-    """
-    Realiza a predição de risco para um aluno
-    
-    Retorna:
-    - classe: 0 (Sem Risco), 1 (Risco Moderado), 2 (Risco Severo)
-    - probabilidades: array com probabilidade de cada classe
-    """
-    # Criar array de features na ordem correta
-    X = np.array([[indicadores[f] for f in features]])
-    
-    # Normalizar
-    X_scaled = scaler.transform(X)
-    
-    # Predição
-    classe = modelo.predict(X_scaled)[0]
-    probabilidades = modelo.predict_proba(X_scaled)[0]
-    
-    return classe, probabilidades
-
-def get_classe_nome(classe):
-    """Retorna o nome da classe de risco"""
-    nomes = {0: 'Sem Risco', 1: 'Risco Moderado', 2: 'Risco Severo'}
-    return nomes.get(classe, 'Desconhecido')
-
-def get_classe_cor(classe):
-    """Retorna a cor associada à classe de risco"""
-    cores = {0: '#2ecc71', 1: '#f39c12', 2: '#e74c3c'}
-    return cores.get(classe, '#95a5a6')
+# Carregar dados e modelo
+df = carregar_dados()
+modelo, scaler, le_dict, modelo_info = carregar_modelo()
 
 # Sidebar
-st.sidebar.image("https://passosmagicos.org.br/wp-content/uploads/2021/09/logo-passos-magicos.png", width=200)
-st.sidebar.title("🎓 Navegação")
+st.sidebar.image("https://www.passosmagicos.org.br/wp-content/uploads/2021/10/logo-passos-magicos.png", width=200)
+st.sidebar.title("📊 Navegação")
 
 pagina = st.sidebar.radio(
     "Selecione a página:",
-    ["🏠 Início", "📊 Dashboard", "🔮 Predição de Risco", "📈 Sobre o Modelo", "ℹ️ Sobre"]
+    ["🏠 Visão Geral", "📈 Análise Exploratória", "🔮 Predição de Risco", "📋 Sobre o Projeto"]
 )
 
-# Carregar modelo
-modelo, scaler, features, modelo_info = carregar_modelo()
-
-# Páginas
-if pagina == "🏠 Início":
-    st.markdown('<p class="main-header">🎓 Passos Mágicos</p>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Sistema de Análise e Predição de Risco de Defasagem Educacional</p>', unsafe_allow_html=True)
+# ==================== PÁGINA: VISÃO GERAL ====================
+if pagina == "🏠 Visão Geral":
+    st.markdown('<p class="main-header">🎓 Datathon FIAP - Passos Mágicos</p>', unsafe_allow_html=True)
+    st.markdown('<p class="sub-header">Análise de Indicadores Educacionais e Predição de Risco de Defasagem</p>', unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("""
-        ### 📊 Análise de Dados
-        Explore os indicadores educacionais dos alunos da Passos Mágicos através de visualizações interativas.
-        """)
-    
-    with col2:
-        st.markdown("""
-        ### 🔮 Predição de Risco
-        Utilize nosso modelo de Machine Learning para identificar alunos em risco de defasagem educacional.
-        """)
-    
-    with col3:
-        st.markdown("""
-        ### 📈 Insights
-        Descubra os fatores que mais influenciam o desenvolvimento educacional dos alunos.
-        """)
-    
-    st.divider()
-    
-    st.markdown("""
-    ## Sobre a Associação Passos Mágicos
-    
-    A **Associação Passos Mágicos** tem uma trajetória de 32 anos de atuação, trabalhando na transformação 
-    da vida de crianças e jovens de baixa renda em Embu-Guaçu. A missão da organização é promover a 
-    educação de qualidade como ferramenta de transformação social.
-    
-    ### Indicadores Avaliados (PEDE)
-    
-    | Indicador | Descrição |
-    |-----------|-----------|
-    | **IDA** | Indicador de Desempenho Acadêmico |
-    | **IEG** | Indicador de Engajamento |
-    | **IAA** | Indicador de Autoavaliação |
-    | **IPS** | Indicador Psicossocial |
-    | **IPP** | Indicador Psicopedagógico |
-    | **IPV** | Indicador de Ponto de Virada |
-    | **INDE** | Índice de Desenvolvimento Educacional (global) |
-    
-    ### Classificação de Risco de Defasagem
-    
-    | Classificação | Defasagem (D) | Descrição |
-    |---------------|---------------|-----------|
-    | **Sem Risco** | D ≥ 0 | Aluno em fase adequada ou adiantado |
-    | **Risco Moderado** | 0 > D ≥ -2 | Aluno 1-2 fases atrasado |
-    | **Risco Severo** | D < -2 | Aluno 3+ fases atrasado |
-    """)
-
-elif pagina == "📊 Dashboard":
-    st.markdown('<p class="main-header">📊 Dashboard de Indicadores</p>', unsafe_allow_html=True)
-    
-    # Carregar dados
-    df_data = carregar_dados()
-    
-    if df_data[0] is not None:
-        df = df_data[0]
-        
-        # Renomear colunas
-        col_map = {}
-        for col in df.columns:
-            col_lower = col.lower()
-            if col_lower == 'iaa': col_map[col] = 'IAA'
-            elif col_lower == 'ieg' and 'destaque' not in col_lower: col_map[col] = 'IEG'
-            elif col_lower == 'ips': col_map[col] = 'IPS'
-            elif col_lower == 'ida' and 'destaque' not in col_lower: col_map[col] = 'IDA'
-            elif col_lower == 'ipv' and 'destaque' not in col_lower: col_map[col] = 'IPV'
-            elif col_lower == 'ian': col_map[col] = 'IAN'
-            elif 'defas' in col_lower: col_map[col] = 'DEFASAGEM'
-        
-        if 'INDE 22' in df.columns:
-            col_map['INDE 22'] = 'INDE'
-        
-        df = df.rename(columns=col_map)
-        
-        # Converter para numérico
-        for col in ['INDE', 'IAA', 'IEG', 'IPS', 'IDA', 'IPV', 'IAN', 'DEFASAGEM']:
-            if col in df.columns:
-                df[col] = pd.to_numeric(df[col], errors='coerce')
-        
-        # Criar classificação de risco
-        def classificar_risco(d):
-            if pd.isna(d):
-                return None
-            if d >= 0:
-                return 'Sem Risco'
-            elif d >= -2:
-                return 'Risco Moderado'
-            else:
-                return 'Risco Severo'
-        
-        df['CLASSE_RISCO'] = df['DEFASAGEM'].apply(classificar_risco)
-        
+    if df is not None:
         # Métricas principais
-        st.subheader("📊 Visão Geral dos Dados")
-        
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
             st.metric("Total de Alunos", f"{len(df):,}")
-        
         with col2:
-            inde_medio = df['INDE'].mean()
-            st.metric("INDE Médio", f"{inde_medio:.2f}")
-        
+            anos = df['ANO_PEDE'].nunique()
+            st.metric("Anos Analisados", f"{anos}")
         with col3:
-            pct_risco = (df['DEFASAGEM'] < 0).mean() * 100
-            st.metric("% em Defasagem", f"{pct_risco:.1f}%")
-        
+            if 'DEFASAGEM' in df.columns:
+                df['DEFASAGEM'] = pd.to_numeric(df['DEFASAGEM'], errors='coerce')
+                sem_risco = (df['DEFASAGEM'] >= 0).sum()
+                st.metric("Sem Risco", f"{sem_risco:,}")
         with col4:
-            pct_severo = (df['DEFASAGEM'] < -2).mean() * 100
-            st.metric("% Risco Severo", f"{pct_severo:.1f}%")
+            if 'DEFASAGEM' in df.columns:
+                com_risco = (df['DEFASAGEM'] < 0).sum()
+                st.metric("Com Risco", f"{com_risco:,}")
         
-        st.divider()
+        st.markdown("---")
         
-        # Distribuição de Risco
-        st.subheader("🎯 Distribuição por Classificação de Risco")
-        
+        # Gráficos principais
         col1, col2 = st.columns(2)
         
         with col1:
-            risco_counts = df['CLASSE_RISCO'].value_counts()
-            cores = {'Sem Risco': '#2ecc71', 'Risco Moderado': '#f39c12', 'Risco Severo': '#e74c3c'}
-            
-            fig = px.pie(
-                values=risco_counts.values,
-                names=risco_counts.index,
-                title='Distribuição de Risco',
-                color=risco_counts.index,
-                color_discrete_map=cores
-            )
-            st.plotly_chart(fig, use_container_width=True)
+            st.subheader("📊 Distribuição por Ano")
+            if 'ANO_PEDE' in df.columns:
+                contagem = df['ANO_PEDE'].value_counts().sort_index()
+                fig = px.bar(x=contagem.index, y=contagem.values, 
+                            labels={'x': 'Ano', 'y': 'Quantidade'},
+                            color=contagem.values, color_continuous_scale='Blues')
+                fig.update_layout(showlegend=False)
+                st.plotly_chart(fig, use_container_width=True)
         
         with col2:
-            fig = px.bar(
-                x=risco_counts.index,
-                y=risco_counts.values,
-                title='Quantidade de Alunos por Classificação',
-                color=risco_counts.index,
-                color_discrete_map=cores,
-                labels={'x': 'Classificação', 'y': 'Quantidade'}
-            )
+            st.subheader("📊 Distribuição de Risco")
+            if 'DEFASAGEM' in df.columns:
+                df_valid = df.dropna(subset=['DEFASAGEM'])
+                sem_risco = (df_valid['DEFASAGEM'] >= 0).sum()
+                com_risco = (df_valid['DEFASAGEM'] < 0).sum()
+                
+                fig = px.pie(values=[sem_risco, com_risco], 
+                            names=['Sem Risco', 'Com Risco'],
+                            color_discrete_sequence=['#22C55E', '#EF4444'])
+                st.plotly_chart(fig, use_container_width=True)
+        
+        # Indicadores médios
+        st.subheader("📈 Indicadores Médios")
+        indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV']
+        medias = []
+        for ind in indicadores:
+            if ind in df.columns:
+                df[ind] = pd.to_numeric(df[ind], errors='coerce')
+                medias.append(df[ind].mean())
+            else:
+                medias.append(0)
+        
+        fig = px.bar(x=indicadores, y=medias,
+                    labels={'x': 'Indicador', 'y': 'Média'},
+                    color=medias, color_continuous_scale='Viridis')
+        fig.update_layout(showlegend=False)
+        st.plotly_chart(fig, use_container_width=True)
+
+# ==================== PÁGINA: ANÁLISE EXPLORATÓRIA ====================
+elif pagina == "📈 Análise Exploratória":
+    st.markdown('<p class="main-header">📈 Análise Exploratória</p>', unsafe_allow_html=True)
+    
+    if df is not None:
+        # Filtros
+        st.sidebar.subheader("Filtros")
+        anos_disponiveis = sorted(df['ANO_PEDE'].unique())
+        ano_selecionado = st.sidebar.multiselect("Ano", anos_disponiveis, default=anos_disponiveis)
+        
+        df_filtrado = df[df['ANO_PEDE'].isin(ano_selecionado)]
+        
+        # Análise de correlação
+        st.subheader("🔗 Correlação entre Indicadores")
+        indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV']
+        df_ind = df_filtrado[indicadores].apply(pd.to_numeric, errors='coerce').dropna()
+        
+        if len(df_ind) > 0:
+            corr = df_ind.corr()
+            fig = px.imshow(corr, text_auto='.2f', aspect='auto',
+                           color_continuous_scale='RdBu_r')
             st.plotly_chart(fig, use_container_width=True)
         
-        st.divider()
+        # Distribuição dos indicadores
+        st.subheader("📊 Distribuição dos Indicadores")
+        indicador_sel = st.selectbox("Selecione o indicador:", indicadores)
         
-        # Indicadores por Classificação de Risco
-        st.subheader("📈 Média dos Indicadores por Classificação de Risco")
+        if indicador_sel in df_filtrado.columns:
+            df_filtrado[indicador_sel] = pd.to_numeric(df_filtrado[indicador_sel], errors='coerce')
+            fig = px.histogram(df_filtrado, x=indicador_sel, nbins=30,
+                              color_discrete_sequence=['#3B82F6'])
+            st.plotly_chart(fig, use_container_width=True)
         
-        indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV', 'INDE']
-        indicadores_existentes = [i for i in indicadores if i in df.columns]
-        
-        media_por_risco = df.groupby('CLASSE_RISCO')[indicadores_existentes].mean()
-        
-        fig = go.Figure()
-        
-        for risco in ['Sem Risco', 'Risco Moderado', 'Risco Severo']:
-            if risco in media_por_risco.index:
+        # Análise por classe de risco
+        st.subheader("📊 Indicadores por Classe de Risco")
+        if 'DEFASAGEM' in df_filtrado.columns:
+            df_filtrado['DEFASAGEM'] = pd.to_numeric(df_filtrado['DEFASAGEM'], errors='coerce')
+            df_filtrado['CLASSE_RISCO'] = df_filtrado['DEFASAGEM'].apply(
+                lambda x: 'Sem Risco' if x >= 0 else 'Com Risco' if pd.notna(x) else None
+            )
+            
+            df_risco = df_filtrado.dropna(subset=['CLASSE_RISCO'])
+            
+            media_risco = df_risco.groupby('CLASSE_RISCO')[indicadores].mean()
+            
+            fig = go.Figure()
+            for classe in media_risco.index:
                 fig.add_trace(go.Bar(
-                    name=risco,
-                    x=indicadores_existentes,
-                    y=media_por_risco.loc[risco].values,
-                    marker_color=cores[risco]
+                    name=classe,
+                    x=indicadores,
+                    y=media_risco.loc[classe].values,
+                    marker_color='#22C55E' if classe == 'Sem Risco' else '#EF4444'
                 ))
-        
-        fig.update_layout(
-            title='Comparação de Indicadores por Classificação de Risco',
-            barmode='group',
-            xaxis_title='Indicador',
-            yaxis_title='Média'
-        )
-        st.plotly_chart(fig, use_container_width=True)
-        
-        # Insights
-        st.info("""
-        **💡 Insights:**
-        - Alunos em **Risco Severo** tendem a ter indicadores mais baixos em todas as dimensões
-        - O **IEG (Engajamento)** mostra diferença significativa entre as classificações
-        - O **INDE** reflete bem a classificação de risco geral
-        """)
-        
-    else:
-        st.warning("Dados não disponíveis. Por favor, faça upload do arquivo de dados.")
+            fig.update_layout(barmode='group')
+            st.plotly_chart(fig, use_container_width=True)
 
+# ==================== PÁGINA: PREDIÇÃO DE RISCO ====================
 elif pagina == "🔮 Predição de Risco":
     st.markdown('<p class="main-header">🔮 Predição de Risco de Defasagem</p>', unsafe_allow_html=True)
-    st.markdown('<p class="sub-header">Insira os indicadores do aluno para avaliar o risco de defasagem</p>', unsafe_allow_html=True)
     
-    if modelo is not None:
-        st.info("""
-        ℹ️ **Como funciona:** O modelo analisa os indicadores do aluno e identifica padrões 
-        associados a alunos em defasagem. Isso permite uma **intervenção preventiva** antes 
-        que a defasagem aconteça.
-        """)
+    if modelo is not None and modelo_info is not None:
+        st.success(f"✅ Modelo carregado: **{modelo_info['modelo_nome']}** | Acurácia: **{modelo_info['accuracy']*100:.1f}%**")
         
-        st.markdown("### 📝 Indicadores do Aluno")
-        st.caption("Insira os valores dos indicadores (escala de 0 a 10)")
+        st.markdown("---")
+        st.subheader("📝 Insira os dados do aluno:")
         
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            ida = st.slider("IDA - Desempenho Acadêmico", 0.0, 10.0, 5.0, 0.1,
-                           help="Média das notas de Matemática, Português e Inglês")
-            ieg = st.slider("IEG - Engajamento", 0.0, 10.0, 5.0, 0.1,
-                           help="Participação em tarefas e atividades")
+            st.markdown("**Indicadores PEDE**")
+            ida = st.slider("IDA (Desempenho Acadêmico)", 0.0, 10.0, 7.0, 0.1)
+            ieg = st.slider("IEG (Engajamento)", 0.0, 10.0, 7.0, 0.1)
+            iaa = st.slider("IAA (Autoavaliação)", 0.0, 10.0, 7.0, 0.1)
+            ips = st.slider("IPS (Psicossocial)", 0.0, 10.0, 7.0, 0.1)
+            ipv = st.slider("IPV (Ponto de Virada)", 0.0, 10.0, 7.0, 0.1)
         
         with col2:
-            iaa = st.slider("IAA - Autoavaliação", 0.0, 10.0, 5.0, 0.1,
-                           help="Autoavaliação do aluno sobre seu desempenho")
-            ips = st.slider("IPS - Psicossocial", 0.0, 10.0, 5.0, 0.1,
-                           help="Avaliação comportamental, emocional e social")
+            st.markdown("**Notas por Matéria**")
+            mat = st.slider("Matemática", 0.0, 10.0, 7.0, 0.1)
+            por = st.slider("Português", 0.0, 10.0, 7.0, 0.1)
+            ing = st.slider("Inglês", 0.0, 10.0, 7.0, 0.1)
         
         with col3:
-            ipv = st.slider("IPV - Ponto de Virada", 0.0, 10.0, 5.0, 0.1,
-                           help="Análise de progresso e desenvolvimento")
-            inde = st.slider("INDE - Índice de Desenvolvimento", 0.0, 10.0, 5.0, 0.1,
-                            help="Índice geral de desenvolvimento educacional")
+            st.markdown("**Dados Contextuais**")
+            idade = st.number_input("Idade", min_value=6, max_value=25, value=12)
+            ano_ingresso = st.number_input("Ano de Ingresso", min_value=2015, max_value=2024, value=2022)
+            genero = st.selectbox("Gênero", ["Feminino", "Masculino"])
+            instituicao = st.selectbox("Instituição de Ensino", 
+                                       ["Pública", "Privada", "Privada - Programa de apadrinhamento"])
         
-        st.divider()
+        st.markdown("---")
         
-        if st.button("🔍 Analisar Risco", type="primary", use_container_width=True):
-            # Preparar indicadores
-            indicadores = {
-                'IDA': ida, 'IEG': ieg, 'IAA': iaa,
-                'IPS': ips, 'IPV': ipv, 'INDE': inde
-            }
-            
-            # Fazer predição
-            classe, probabilidades = prever_risco(modelo, scaler, features, indicadores)
-            
-            st.divider()
-            
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                # Gauge de probabilidade da classe predita
-                prob_classe = probabilidades[classe] * 100
+        if st.button("🔮 Realizar Predição", type="primary", use_container_width=True):
+            try:
+                # Preparar dados
+                genero_enc = le_dict['GÊNERO'].transform([genero])[0]
+                instituicao_enc = le_dict['INSTITUIÇÃO DE ENSINO'].transform([instituicao])[0]
                 
-                fig = go.Figure(go.Indicator(
-                    mode = "gauge+number",
-                    value = prob_classe,
-                    domain = {'x': [0, 1], 'y': [0, 1]},
-                    title = {'text': f"Confiança: {get_classe_nome(classe)}"},
-                    number = {'suffix': '%'},
-                    gauge = {
-                        'axis': {'range': [0, 100]},
-                        'bar': {'color': get_classe_cor(classe)},
-                        'steps': [
-                            {'range': [0, 33], 'color': "#f8d7da"},
-                            {'range': [33, 66], 'color': "#fff3cd"},
-                            {'range': [66, 100], 'color': "#d4edda"}
-                        ]
-                    }
-                ))
-                fig.update_layout(height=300)
-                st.plotly_chart(fig, use_container_width=True)
+                # Criar array de features na ordem correta
+                features = np.array([[ida, ieg, iaa, ips, ipv, idade, ano_ingresso, mat, por, ing, genero_enc, instituicao_enc]])
                 
-                # Probabilidades de cada classe
-                st.markdown("**Probabilidades por Classe:**")
-                prob_df = pd.DataFrame({
-                    'Classe': ['Sem Risco', 'Risco Moderado', 'Risco Severo'],
-                    'Probabilidade': [f"{p*100:.1f}%" for p in probabilidades]
-                })
-                st.dataframe(prob_df, hide_index=True, use_container_width=True)
-            
-            with col2:
-                if classe == 2:  # Risco Severo
-                    st.markdown("""
-                    <div class="risk-severe">
-                        <h3>🚨 RISCO SEVERO</h3>
-                        <p>O modelo identificou que este aluno apresenta padrões associados a <strong>defasagem severa</strong> (3+ fases atrasado).</p>
-                        <p><strong>Confiança:</strong> {:.1f}%</p>
-                    </div>
-                    """.format(prob_classe), unsafe_allow_html=True)
+                # Normalizar
+                features_scaled = scaler.transform(features)
+                
+                # Predição
+                predicao = modelo.predict(features_scaled)[0]
+                probabilidade = modelo.predict_proba(features_scaled)[0]
+                
+                st.markdown("---")
+                st.subheader("📊 Resultado da Predição")
+                
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    if predicao == 1:
+                        st.markdown("""
+                        <div class="risk-high">
+                            <h2>⚠️ COM RISCO</h2>
+                            <p>O aluno apresenta indicadores que sugerem risco de defasagem escolar.</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    else:
+                        st.markdown("""
+                        <div class="risk-low">
+                            <h2>✅ SEM RISCO</h2>
+                            <p>O aluno apresenta indicadores adequados para sua fase escolar.</p>
+                        </div>
+                        """, unsafe_allow_html=True)
+                
+                with col2:
+                    # Gráfico de probabilidade
+                    fig = go.Figure(go.Indicator(
+                        mode="gauge+number",
+                        value=probabilidade[1] * 100,
+                        title={'text': "Probabilidade de Risco"},
+                        gauge={
+                            'axis': {'range': [0, 100]},
+                            'bar': {'color': "#EF4444" if probabilidade[1] > 0.5 else "#22C55E"},
+                            'steps': [
+                                {'range': [0, 30], 'color': "#DCFCE7"},
+                                {'range': [30, 70], 'color': "#FEF3C7"},
+                                {'range': [70, 100], 'color': "#FEE2E2"}
+                            ],
+                            'threshold': {
+                                'line': {'color': "black", 'width': 4},
+                                'thickness': 0.75,
+                                'value': 50
+                            }
+                        }
+                    ))
+                    fig.update_layout(height=300)
+                    st.plotly_chart(fig, use_container_width=True)
+                
+                # Fatores de risco
+                st.subheader("📈 Fatores que Influenciaram a Predição")
+                
+                feature_importance = modelo_info.get('feature_importance', {})
+                if feature_importance:
+                    df_imp = pd.DataFrame({
+                        'Feature': list(feature_importance.keys()),
+                        'Importância': list(feature_importance.values())
+                    }).sort_values('Importância', ascending=True)
                     
-                    st.markdown("""
-                    ### ⚠️ Ações Recomendadas:
-                    - 🚨 **Intervenção imediata** necessária
-                    - 📚 Acompanhamento pedagógico intensivo
-                    - 👥 Suporte psicossocial urgente
-                    - 📊 Monitoramento semanal dos indicadores
-                    - 🎯 Plano de recuperação personalizado
+                    fig = px.bar(df_imp, x='Importância', y='Feature', orientation='h',
+                                color='Importância', color_continuous_scale='Blues')
+                    fig.update_layout(showlegend=False, height=400)
+                    st.plotly_chart(fig, use_container_width=True)
+                
+                # Recomendações
+                st.subheader("💡 Recomendações")
+                if predicao == 1:
+                    st.warning("""
+                    **Ações Recomendadas:**
+                    - 📚 Acompanhamento pedagógico individualizado
+                    - 👥 Avaliação psicossocial
+                    - 📊 Monitoramento frequente dos indicadores
+                    - 🎯 Plano de intervenção personalizado
                     """)
-                    
-                elif classe == 1:  # Risco Moderado
-                    st.markdown("""
-                    <div class="risk-moderate">
-                        <h3>⚠️ RISCO MODERADO</h3>
-                        <p>O modelo identificou que este aluno apresenta padrões associados a <strong>defasagem moderada</strong> (1-2 fases atrasado).</p>
-                        <p><strong>Confiança:</strong> {:.1f}%</p>
-                    </div>
-                    """.format(prob_classe), unsafe_allow_html=True)
-                    
-                    st.markdown("""
-                    ### ⚠️ Ações Recomendadas:
-                    - 📋 Acompanhamento pedagógico regular
-                    - 👥 Suporte psicossocial
-                    - 📊 Monitoramento quinzenal dos indicadores
-                    - 🎯 Plano de desenvolvimento personalizado
-                    - 🌟 Incentivar participação em atividades
-                    """)
-                    
-                else:  # Sem Risco
-                    st.markdown("""
-                    <div class="risk-low">
-                        <h3>✅ SEM RISCO</h3>
-                        <p>O modelo indica que este aluno apresenta padrões associados a alunos <strong>em fase adequada</strong>.</p>
-                        <p><strong>Confiança:</strong> {:.1f}%</p>
-                    </div>
-                    """.format(prob_classe), unsafe_allow_html=True)
-                    
-                    st.markdown("""
-                    ### ✅ Recomendações:
-                    - 📈 Manter acompanhamento regular
-                    - 🌟 Incentivar participação em atividades
+                else:
+                    st.info("""
+                    **Ações Recomendadas:**
+                    - ✅ Manter acompanhamento regular
+                    - 📈 Continuar estimulando o engajamento
                     - 🎯 Estabelecer metas de desenvolvimento
-                    - 📊 Monitoramento mensal dos indicadores
                     """)
-            
-            # Radar chart dos indicadores
-            st.subheader("📊 Perfil do Aluno")
-            
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                categorias = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV', 'INDE']
-                valores = [ida, ieg, iaa, ips, ipv, inde]
-                
-                fig = go.Figure()
-                fig.add_trace(go.Scatterpolar(
-                    r=valores + [valores[0]],
-                    theta=categorias + [categorias[0]],
-                    fill='toself',
-                    name='Aluno',
-                    line_color=get_classe_cor(classe)
-                ))
-                
-                # Adicionar média de referência
-                fig.add_trace(go.Scatterpolar(
-                    r=[5, 5, 5, 5, 5, 5, 5],
-                    theta=categorias + [categorias[0]],
-                    fill='toself',
-                    name='Média (5.0)',
-                    line_color='#95a5a6',
-                    opacity=0.3
-                ))
-                
-                fig.update_layout(
-                    polar=dict(radialaxis=dict(visible=True, range=[0, 10])),
-                    showlegend=True,
-                    title='Radar de Indicadores'
-                )
-                st.plotly_chart(fig, use_container_width=True)
-            
-            with col2:
-                # Barras comparativas
-                fig = go.Figure()
-                fig.add_trace(go.Bar(
-                    x=categorias,
-                    y=valores,
-                    name='Aluno',
-                    marker_color=get_classe_cor(classe)
-                ))
-                fig.add_trace(go.Bar(
-                    x=categorias,
-                    y=[5, 5, 5, 5, 5, 5],
-                    name='Média',
-                    marker_color='#95a5a6',
-                    opacity=0.5
-                ))
-                fig.update_layout(
-                    title='Comparação com a Média',
-                    barmode='group',
-                    yaxis_range=[0, 10]
-                )
-                st.plotly_chart(fig, use_container_width=True)
+                    
+            except Exception as e:
+                st.error(f"Erro na predição: {e}")
     else:
-        st.error("Modelo não carregado. Verifique se os arquivos do modelo estão disponíveis.")
+        st.warning("⚠️ Modelo não carregado. Execute o notebook de treinamento primeiro.")
+        st.info("""
+        Para usar a predição de risco:
+        1. Execute o notebook `03_Modelo_Preditivo.ipynb` no Google Colab
+        2. Os arquivos do modelo serão salvos automaticamente
+        3. Recarregue esta página
+        """)
 
-elif pagina == "📈 Sobre o Modelo":
-    st.markdown('<p class="main-header">📈 Sobre o Modelo Preditivo</p>', unsafe_allow_html=True)
+# ==================== PÁGINA: SOBRE O PROJETO ====================
+elif pagina == "📋 Sobre o Projeto":
+    st.markdown('<p class="main-header">📋 Sobre o Projeto</p>', unsafe_allow_html=True)
     
     st.markdown("""
-    ## Metodologia
+    ## 🎯 Objetivo
     
-    O modelo de predição de risco de defasagem foi desenvolvido utilizando técnicas de Machine Learning
-    para identificar padrões nos indicadores educacionais que possam indicar alunos em risco.
+    Este projeto foi desenvolvido para o **Datathon FIAP** em parceria com a **Passos Mágicos**, 
+    com o objetivo de analisar indicadores educacionais e criar um modelo preditivo para 
+    identificar alunos em risco de defasagem escolar.
     
-    ### Objetivo
+    ## 📊 Indicadores Analisados
     
-    Identificar **padrões nos indicadores** (IDA, IEG, IAA, IPS, IPV, INDE) que estão associados 
-    a alunos em defasagem, permitindo **intervenção preventiva** antes que a defasagem aconteça.
-    
-    ### Algoritmo Utilizado
-    
-    **Random Forest Classifier** - Um ensemble de árvores de decisão que combina múltiplas árvores
-    para fazer predições mais robustas e precisas.
-    
-    ### Classes de Predição
-    
-    | Classe | Descrição | Defasagem (D) |
-    |--------|-----------|---------------|
-    | **Sem Risco** | Aluno em fase adequada ou adiantado | D ≥ 0 |
-    | **Risco Moderado** | Aluno 1-2 fases atrasado | 0 > D ≥ -2 |
-    | **Risco Severo** | Aluno 3+ fases atrasado | D < -2 |
-    
-    ### Features Utilizadas
-    
-    O modelo utiliza **apenas os indicadores de desempenho**, sem incluir o IAN (que é derivado da defasagem):
-    
-    | Feature | Descrição |
-    |---------|-----------|
-    | **IDA** | Indicador de Desempenho Acadêmico |
-    | **IEG** | Indicador de Engajamento |
-    | **IAA** | Indicador de Autoavaliação |
-    | **IPS** | Indicador Psicossocial |
-    | **IPV** | Indicador de Ponto de Virada |
+    | Indicador | Descrição |
+    |-----------|-----------|
+    | **IDA** | Índice de Desempenho Acadêmico |
+    | **IEG** | Índice de Engajamento |
+    | **IAA** | Índice de Autoavaliação |
+    | **IPS** | Índice Psicossocial |
+    | **IPV** | Índice de Ponto de Virada |
+    | **IAN** | Índice de Adequação de Nível |
     | **INDE** | Índice de Desenvolvimento Educacional |
     
-    ### Métricas de Desempenho
-    """)
+    ## 🤖 Modelo de Machine Learning
     
-    col1, col2, col3 = st.columns(3)
+    Foram testados **10 algoritmos diferentes** de Machine Learning:
+    - Logistic Regression
+    - KNN
+    - SVM
+    - Decision Tree
+    - Random Forest
+    - Gradient Boosting
+    - XGBoost
+    - AdaBoost
+    - MLP (Rede Neural)
+    - Ensemble Voting
     
-    with col1:
-        st.metric("Acurácia Geral", "75.6%", help="Proporção de predições corretas")
-    with col2:
-        st.metric("Recall (Sem Risco)", "69%", help="Capacidade de identificar alunos sem risco")
-    with col3:
-        st.metric("Recall (Risco Moderado)", "82%", help="Capacidade de identificar alunos em risco moderado")
+    O modelo final foi selecionado com base na **acurácia**, **AUC-ROC** e **estabilidade** na validação cruzada.
     
-    st.markdown("""
-    ### Importância das Features
+    ## 👨‍💻 Autor
     
-    O gráfico abaixo mostra quais indicadores têm maior influência na predição de risco:
-    """)
+    **Leandro Leme Crespo**
     
-    # Gráfico de importância (valores do modelo treinado)
-    features_imp = {
-        'INDE': 0.374,
-        'IPV': 0.161,
-        'IDA': 0.152,
-        'IAA': 0.127,
-        'IEG': 0.117,
-        'IPS': 0.096
-    }
+    ## 🔗 Links
     
-    fig = px.bar(
-        x=list(features_imp.values()),
-        y=list(features_imp.keys()),
-        orientation='h',
-        title='Importância das Features no Modelo',
-        labels={'x': 'Importância', 'y': 'Feature'},
-        color=list(features_imp.values()),
-        color_continuous_scale='Blues'
-    )
-    fig.update_layout(showlegend=False)
-    st.plotly_chart(fig, use_container_width=True)
-    
-    st.markdown("""
-    ### Interpretação
-    
-    - **INDE** é o indicador mais importante (34.7%), pois representa o índice geral de desenvolvimento
-    - **IPV** (Ponto de Virada) é o segundo mais importante (16.1%), indicando a relevância do progresso
-    - **IDA** (Desempenho Acadêmico) tem peso significativo (15.2%)
-    - **IAA** e **IEG** contribuem de forma similar (~12% cada)
-    
-    ### Como o Modelo Funciona
-    
-    1. O modelo foi treinado com dados de alunos que **já possuem classificação de defasagem**
-    2. Ele aprendeu quais **padrões de indicadores** estão associados a cada nível de risco
-    3. Quando um novo aluno é avaliado, o modelo compara seus indicadores com os padrões aprendidos
-    4. Isso permite identificar alunos em risco **antes** que a defasagem aconteça
-    
-    ### Limitações
-    
-    - O modelo foi treinado com dados de 2024
-    - A precisão pode variar para perfis de alunos muito diferentes dos dados de treino
-    - Recomenda-se usar as predições como **apoio à decisão**, não como única fonte
-    - O modelo não substitui a avaliação profissional dos educadores
-    """)
-
-elif pagina == "ℹ️ Sobre":
-    st.markdown('<p class="main-header">ℹ️ Sobre o Projeto</p>', unsafe_allow_html=True)
-    
-    st.markdown("""
-    ## Datathon FIAP - Passos Mágicos
-    
-    Este projeto foi desenvolvido como parte do Datathon da FIAP, com o objetivo de analisar
-    os dados educacionais da Associação Passos Mágicos e criar ferramentas para apoiar
-    a identificação de alunos em risco de defasagem.
-    
-    ### Objetivo
-    
-    Construir uma aplicação no Streamlit para disponibilizar o modelo treinado para a Passos Mágicos 
-    utilizar como solução preditiva via aplicação de dados.
-    
-    ### Equipe
-    
-    - **Curso:** Pós-Tech em Data Analytics
-    - **Instituição:** FIAP
-    - **Fase:** 5 - Deep Learning e Analytics
-    
-    ### Tecnologias Utilizadas
-    
-    - **Python** - Linguagem de programação
-    - **Pandas/NumPy** - Análise de dados
-    - **Scikit-learn** - Machine Learning
-    - **Streamlit** - Interface web
-    - **Plotly** - Visualizações interativas
-    
-    ### Repositório
-    
-    O código fonte está disponível no GitHub:
-    - 📁 [github.com/LeandroCrespo/bolao-copa-2026](https://github.com/LeandroCrespo/bolao-copa-2026)
-    
-    ### Contato
-    
-    Para mais informações sobre a Associação Passos Mágicos:
-    - 🌐 [passosmagicos.org.br](https://passosmagicos.org.br)
-    
-    ---
-    
-    *Desenvolvido com ❤️ para transformar vidas através da educação*
+    - [GitHub do Projeto](https://github.com/LeandroCrespo/datathon-passos-magicos)
+    - [Passos Mágicos](https://www.passosmagicos.org.br/)
+    - [FIAP](https://www.fiap.com.br/)
     """)
 
 # Footer
-st.sidebar.divider()
 st.sidebar.markdown("---")
-st.sidebar.markdown("**Datathon FIAP 2024**")
-st.sidebar.markdown("Passos Mágicos")
+st.sidebar.markdown("Desenvolvido para o Datathon FIAP 2024")
+st.sidebar.markdown("© Leandro Leme Crespo")

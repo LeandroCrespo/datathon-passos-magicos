@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Principais Descobertas</title>
+    <title>Descobertas da Análise</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -11,119 +11,107 @@
     <div class="slide-container" style="width: 1280px; min-height: 720px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); font-family: 'Inter', sans-serif; color: white; overflow: hidden;">
         
         <!-- Header -->
-        <div style="padding: 40px 60px 20px 60px;">
+        <div style="padding: 40px 60px 15px 60px;">
             <h1 style="font-size: 42px; font-weight: 700; color: #f8fafc; margin: 0;">
-                📊 Principais Descobertas
+                📊 Descobertas da Análise
             </h1>
             <div style="width: 120px; height: 4px; background: linear-gradient(90deg, #14b8a6, #06b6d4); margin-top: 12px; border-radius: 2px;"></div>
+            <p style="font-size: 16px; color: #94a3b8; margin-top: 10px;">Respostas às Perguntas 1-4 do Datathon</p>
         </div>
 
-        <!-- Main Content -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px 60px;">
+        <!-- Main Content - 2x2 Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 10px 60px;">
             
-            <!-- Left: Distribution -->
-            <div>
-                <h2 style="font-size: 24px; font-weight: 600; color: #14b8a6; margin-bottom: 24px;">
-                    Distribuição de Risco (2024)
-                </h2>
-                
-                <!-- Risk Cards -->
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                    
-                    <!-- Sem Risco -->
-                    <div style="background: rgba(34, 197, 94, 0.15); border-left: 4px solid #22c55e; padding: 16px 20px; border-radius: 8px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Sem Risco</div>
-                                <div style="font-size: 14px; color: #cbd5e1; margin-top: 4px;">Em fase ou adiantado</div>
-                            </div>
-                            <div style="font-size: 36px; font-weight: 700; color: #22c55e;">30%</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Risco Moderado -->
-                    <div style="background: rgba(245, 158, 11, 0.15); border-left: 4px solid #f59e0b; padding: 16px 20px; border-radius: 8px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Risco Moderado</div>
-                                <div style="font-size: 14px; color: #cbd5e1; margin-top: 4px;">1-2 fases atrasado</div>
-                            </div>
-                            <div style="font-size: 36px; font-weight: 700; color: #f59e0b;">67%</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Risco Severo -->
-                    <div style="background: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444; padding: 16px 20px; border-radius: 8px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-size: 14px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px;">Risco Severo</div>
-                                <div style="font-size: 14px; color: #cbd5e1; margin-top: 4px;">3+ fases atrasado</div>
-                            </div>
-                            <div style="font-size: 36px; font-weight: 700; color: #ef4444;">3%</div>
-                        </div>
-                    </div>
+            <!-- P1: Defasagem -->
+            <div style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #ef4444; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">1</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Perfil de Defasagem (IAN)</h3>
                 </div>
-                
-                <!-- Alert -->
-                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); padding: 16px; border-radius: 8px; margin-top: 20px;">
-                    <div style="font-size: 16px; color: #fca5a5; font-weight: 600;">
-                        ⚠️ 70% dos alunos estão em algum nível de defasagem
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 36px; font-weight: 700; color: #ef4444;">55.7%</div>
+                        <div style="font-size: 12px; color: #94a3b8;">Com Risco</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #94a3b8; margin-bottom: 8px;">Evolução (melhorando!):</div>
+                        <div style="display: flex; gap: 8px;">
+                            <span style="background: rgba(239, 68, 68, 0.3); padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #fca5a5;">2022: 70%</span>
+                            <span style="background: rgba(245, 158, 11, 0.3); padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #fcd34d;">2023: 54%</span>
+                            <span style="background: rgba(34, 197, 94, 0.3); padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #86efac;">2024: 46%</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Right: Insights -->
-            <div>
-                <h2 style="font-size: 24px; font-weight: 600; color: #14b8a6; margin-bottom: 24px;">
-                    Padrões Identificados
-                </h2>
-                
-                <div style="display: flex; flex-direction: column; gap: 20px;">
-                    
-                    <!-- Insight 1 -->
-                    <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px;">
-                        <div style="display: flex; align-items: flex-start; gap: 16px;">
-                            <div style="font-size: 28px;">📉</div>
-                            <div>
-                                <div style="font-size: 18px; font-weight: 600; color: #f8fafc; margin-bottom: 8px;">
-                                    Indicadores Baixos = Maior Risco
-                                </div>
-                                <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
-                                    Alunos em risco severo têm indicadores mais baixos em todas as dimensões avaliadas.
-                                </div>
-                            </div>
+            <!-- P2: IDA -->
+            <div style="background: rgba(34, 197, 94, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(34, 197, 94, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #22c55e; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">2</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Desempenho Acadêmico (IDA)</h3>
+                </div>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 28px; font-weight: 700; color: #22c55e;">↑ +0.26</div>
+                        <div style="font-size: 12px; color: #94a3b8;">Melhorando</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: #94a3b8; margin-bottom: 8px;">IDA médio por ano:</div>
+                        <div style="display: flex; gap: 8px;">
+                            <span style="background: rgba(100, 116, 139, 0.3); padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #94a3b8;">2022: 6.09</span>
+                            <span style="background: rgba(34, 197, 94, 0.3); padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #86efac;">2023: 6.66</span>
+                            <span style="background: rgba(34, 197, 94, 0.2); padding: 4px 8px; border-radius: 8px; font-size: 12px; color: #86efac;">2024: 6.35</span>
                         </div>
                     </div>
-                    
-                    <!-- Insight 2 -->
-                    <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px;">
-                        <div style="display: flex; align-items: flex-start; gap: 16px;">
-                            <div style="font-size: 28px;">🎯</div>
-                            <div>
-                                <div style="font-size: 18px; font-weight: 600; color: #f8fafc; margin-bottom: 8px;">
-                                    INDE é o Melhor Preditor
-                                </div>
-                                <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
-                                    O índice geral de desenvolvimento (INDE) tem 35% de importância na predição de risco.
-                                </div>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            
+            <!-- P3: IEG x IDA x IPV -->
+            <div style="background: rgba(20, 184, 166, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(20, 184, 166, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #14b8a6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">3</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Engajamento (IEG)</h3>
+                </div>
+                <div style="font-size: 14px; color: #5eead4; font-weight: 600; margin-bottom: 10px;">
+                    ✓ SIM, há relação direta forte!
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 20px; font-weight: 700; color: #14b8a6;">0.54</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IEG × IDA</div>
                     </div>
-                    
-                    <!-- Insight 3 -->
-                    <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px;">
-                        <div style="display: flex; align-items: flex-start; gap: 16px;">
-                            <div style="font-size: 28px;">🔄</div>
-                            <div>
-                                <div style="font-size: 18px; font-weight: 600; color: #f8fafc; margin-bottom: 8px;">
-                                    IPV e IDA são Determinantes
-                                </div>
-                                <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
-                                    Ponto de Virada (16%) e Desempenho Acadêmico (15%) são os segundos mais importantes.
-                                </div>
-                            </div>
-                        </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 20px; font-weight: 700; color: #14b8a6;">0.56</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IEG × IPV</div>
                     </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 20px; font-weight: 700; color: #14b8a6;">0.56</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IDA × IPV</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- P4: IAA -->
+            <div style="background: rgba(245, 158, 11, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #f59e0b; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">4</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Autoavaliação (IAA)</h3>
+                </div>
+                <div style="font-size: 14px; color: #fcd34d; font-weight: 600; margin-bottom: 10px;">
+                    ⚠ Correlação FRACA com realidade
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 20px; font-weight: 700; color: #f59e0b;">0.11</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IAA × IDA</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 20px; font-weight: 700; color: #f59e0b;">0.13</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IAA × IEG</div>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: #94a3b8; margin-top: 10px;">
+                    → Alunos não avaliam bem seu próprio desempenho
                 </div>
             </div>
         </div>

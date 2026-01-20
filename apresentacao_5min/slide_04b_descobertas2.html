@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mais Descobertas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="slide-container" style="width: 1280px; min-height: 720px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); font-family: 'Inter', sans-serif; color: white; overflow: hidden;">
+        
+        <!-- Header -->
+        <div style="padding: 40px 60px 15px 60px;">
+            <h1 style="font-size: 42px; font-weight: 700; color: #f8fafc; margin: 0;">
+                📊 Mais Descobertas
+            </h1>
+            <div style="width: 120px; height: 4px; background: linear-gradient(90deg, #14b8a6, #06b6d4); margin-top: 12px; border-radius: 2px;"></div>
+            <p style="font-size: 16px; color: #94a3b8; margin-top: 10px;">Respostas às Perguntas 5-8 do Datathon</p>
+        </div>
+
+        <!-- Main Content - 2x2 Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 10px 60px;">
+            
+            <!-- P5: IPS -->
+            <div style="background: rgba(139, 92, 246, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(139, 92, 246, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #8b5cf6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">5</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Psicossocial (IPS)</h3>
+                </div>
+                <div style="font-size: 14px; color: #c4b5fd; font-weight: 600; margin-bottom: 10px;">
+                    ⚠ Correlação FRACA com desempenho
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 20px; font-weight: 700; color: #8b5cf6;">0.02</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IPS × IDA</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 20px; font-weight: 700; color: #8b5cf6;">-0.05</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IPS × IEG</div>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: #94a3b8; margin-top: 10px;">
+                    → IPS não antecede quedas de desempenho diretamente
+                </div>
+            </div>
+            
+            <!-- P6: IPP -->
+            <div style="background: rgba(236, 72, 153, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(236, 72, 153, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #ec4899; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">6</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Psicopedagógico (IPP)</h3>
+                </div>
+                <div style="font-size: 14px; color: #f9a8d4; font-weight: 600; margin-bottom: 10px;">
+                    ✓ CONFIRMA a defasagem identificada
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 14px 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; font-weight: 700; color: #ec4899;">0.18</div>
+                        <div style="font-size: 11px; color: #94a3b8;">IPP × Defasagem</div>
+                    </div>
+                    <div style="font-size: 13px; color: #94a3b8; flex: 1;">
+                        Correlação positiva indica que avaliações psicopedagógicas estão alinhadas com a defasagem real.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- P7: IPV -->
+            <div style="background: rgba(6, 182, 212, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(6, 182, 212, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #06b6d4; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">7</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Ponto de Virada (IPV)</h3>
+                </div>
+                <div style="font-size: 14px; color: #67e8f9; font-weight: 600; margin-bottom: 10px;">
+                    🎯 IEG é o que mais influencia!
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div style="background: rgba(6, 182, 212, 0.2); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 18px; font-weight: 700; color: #06b6d4;">0.56</div>
+                        <div style="font-size: 10px; color: #94a3b8;">IEG × IPV</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 18px; font-weight: 700; color: #94a3b8;">0.56</div>
+                        <div style="font-size: 10px; color: #94a3b8;">IDA × IPV</div>
+                    </div>
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 10px; border-radius: 8px; text-align: center; flex: 1;">
+                        <div style="font-size: 18px; font-weight: 700; color: #94a3b8;">0.06</div>
+                        <div style="font-size: 10px; color: #94a3b8;">IAA × IPV</div>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: #94a3b8; margin-top: 10px;">
+                    → Engajamento e desempenho acadêmico impulsionam o ponto de virada
+                </div>
+            </div>
+            
+            <!-- P8: INDE -->
+            <div style="background: rgba(34, 197, 94, 0.1); padding: 20px; border-radius: 16px; border: 1px solid rgba(34, 197, 94, 0.2);">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <div style="background: #22c55e; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px;">8</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: #f8fafc; margin: 0;">Composição do INDE</h3>
+                </div>
+                <div style="font-size: 13px; color: #86efac; font-weight: 500; margin-bottom: 12px;">
+                    Fórmula oficial (Fases 0-7):
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;">
+                    <span style="background: rgba(34, 197, 94, 0.3); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: #86efac; font-weight: 600;">IDA 20%</span>
+                    <span style="background: rgba(34, 197, 94, 0.3); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: #86efac; font-weight: 600;">IEG 20%</span>
+                    <span style="background: rgba(34, 197, 94, 0.3); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: #86efac; font-weight: 600;">IPV 20%</span>
+                    <span style="background: rgba(100, 116, 139, 0.3); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: #94a3b8;">IAN 10%</span>
+                    <span style="background: rgba(100, 116, 139, 0.3); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: #94a3b8;">IAA 10%</span>
+                    <span style="background: rgba(100, 116, 139, 0.3); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: #94a3b8;">IPS 10%</span>
+                    <span style="background: rgba(100, 116, 139, 0.3); padding: 4px 10px; border-radius: 8px; font-size: 12px; color: #94a3b8;">IPP 10%</span>
+                </div>
+                <div style="font-size: 12px; color: #94a3b8;">
+                    → IDA + IEG + IPV representam 60% do INDE
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="position: absolute; bottom: 20px; right: 60px; font-size: 14px; color: #64748b;">
+            Datathon FIAP 2024 - Passos Mágicos
+        </div>
+    </div>
+</body>
+</html>

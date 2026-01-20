@@ -2,14 +2,15 @@
   "project_info": {
     "title": "Datathon FIAP - Passos Mágicos",
     "created": 1768843268.8181021,
-    "last_updated": 1768912101.7394035,
-    "total_slides": 10
+    "last_updated": 1768918798.7621715,
+    "total_slides": 11
   },
   "slides": {
     "slide_01_capa": "edited",
     "slide_02_desafio": "edited",
     "slide_03_dados": "edited",
     "slide_04_descobertas": "edited",
+    "slide_04b_descobertas2": "edit_pending",
     "slide_05_modelo": "edited",
     "slide_06_features": "edited",
     "slide_07_streamlit": "edited",
@@ -43,6 +44,13 @@
       "id": "slide_04_descobertas",
       "title": "Principais Descobertas",
       "summary": "Redução de 17% na defasagem, Engajamento como motor do desenvolvimento, Ponto de Virada como fator de recuperação.",
+      "image_plan": "",
+      "slide_template_key": ""
+    },
+    {
+      "id": "slide_04b_descobertas2",
+      "title": "Mais Descobertas",
+      "summary": "Respostas às perguntas 5-8 do Datathon: IPS, IPP, IPV e INDE",
       "image_plan": "",
       "slide_template_key": ""
     },
