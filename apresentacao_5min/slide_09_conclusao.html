@@ -2,149 +2,87 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        .slide-container {
-            width: 1280px;
-            min-height: 720px;
-            background-color: #F5F5F5;
-            font-family: 'Inter', sans-serif;
-            color: #1A1A1A;
-            display: flex;
-            flex-direction: column;
-            padding: 80px;
-        }
-        
-        .header {
-            margin-bottom: 50px;
-        }
-        
-        .section-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #FF4B4B;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        h1 {
-            font-size: 48px;
-            font-weight: 900;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 24px;
-            font-weight: 300;
-            color: #666;
-        }
-        
-        .value-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            flex: 1;
-        }
-        
-        .value-item {
-            background-color: #FFFFFF;
-            padding: 30px;
-            border-left: 6px solid #1A1A1A;
-            display: flex;
-            align-items: flex-start;
-        }
-        
-        .value-item:nth-child(2) { border-color: #FF4B4B; }
-        .value-item:nth-child(3) { border-color: #0068C9; }
-        .value-item:nth-child(4) { border-color: #1A1A1A; }
-        
-        .icon-wrapper {
-            font-size: 32px;
-            margin-right: 25px;
-            margin-top: 5px;
-            color: #333;
-        }
-        
-        .value-item:nth-child(2) .icon-wrapper { color: #FF4B4B; }
-        .value-item:nth-child(3) .icon-wrapper { color: #0068C9; }
-        
-        .text-content {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .item-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-        
-        .item-desc {
-            font-size: 18px;
-            font-weight: 300;
-            line-height: 1.4;
-            color: #555;
-        }
-        
-        .highlight {
-            font-weight: 700;
-            color: #1A1A1A;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conclusão</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="slide-container">
-        <div class="header">
-            <div class="section-label">Conclusão</div>
-            <h1>VALOR ENTREGUE</h1>
-            <div class="subtitle">Transformando dados em impacto real</div>
+    <div class="slide-container" style="width: 1280px; min-height: 720px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); font-family: 'Inter', sans-serif; color: white; overflow: hidden;">
+        
+        <!-- Header -->
+        <div style="padding: 40px 60px 20px 60px;">
+            <h1 style="font-size: 42px; font-weight: 700; color: #f8fafc; margin: 0;">
+                ✅ Conclusão
+            </h1>
+            <div style="width: 120px; height: 4px; background: linear-gradient(90deg, #14b8a6, #06b6d4); margin-top: 12px; border-radius: 2px;"></div>
+        </div>
+
+        <!-- Subtitle -->
+        <div style="padding: 0 60px 20px 60px;">
+            <p style="font-size: 20px; color: #94a3b8; margin: 0;">
+                Valor entregue para a Associação Passos Mágicos
+            </p>
+        </div>
+
+        <!-- Main Content - 3 Columns -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 10px 60px;">
+            
+            <!-- Column 1: Análise -->
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 24px; border-radius: 16px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
+                <h3 style="font-size: 20px; font-weight: 600; color: #14b8a6; margin-bottom: 12px;">
+                    Análise Completa
+                </h3>
+                <ul style="font-size: 14px; color: #94a3b8; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px;">✓ Exploração dos dados PEDE 2024</li>
+                    <li style="margin-bottom: 8px;">✓ Identificação de padrões de risco</li>
+                    <li style="margin-bottom: 8px;">✓ 70% dos alunos em defasagem</li>
+                    <li>✓ INDE como principal preditor</li>
+                </ul>
+            </div>
+            
+            <!-- Column 2: Modelo -->
+            <div style="background: rgba(20, 184, 166, 0.1); padding: 24px; border-radius: 16px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🤖</div>
+                <h3 style="font-size: 20px; font-weight: 600; color: #14b8a6; margin-bottom: 12px;">
+                    Modelo Preditivo
+                </h3>
+                <ul style="font-size: 14px; color: #94a3b8; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px;">✓ 3 classes de risco</li>
+                    <li style="margin-bottom: 8px;">✓ <strong style="color: #14b8a6;">75.6%</strong> de acurácia</li>
+                    <li style="margin-bottom: 8px;">✓ <strong style="color: #14b8a6;">82%</strong> recall risco moderado</li>
+                    <li>✓ Intervenção preventiva</li>
+                </ul>
+            </div>
+            
+            <!-- Column 3: Ferramenta -->
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 24px; border-radius: 16px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🚀</div>
+                <h3 style="font-size: 20px; font-weight: 600; color: #14b8a6; margin-bottom: 12px;">
+                    Ferramenta Prática
+                </h3>
+                <ul style="font-size: 14px; color: #94a3b8; line-height: 1.8; list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 8px;">✓ Streamlit no Community Cloud</li>
+                    <li style="margin-bottom: 8px;">✓ Dashboard interativo</li>
+                    <li style="margin-bottom: 8px;">✓ Predição em tempo real</li>
+                    <li>✓ Recomendações de ação</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Message -->
+        <div style="padding: 30px 60px;">
+            <div style="background: linear-gradient(90deg, rgba(20, 184, 166, 0.2), rgba(6, 182, 212, 0.2)); padding: 24px 32px; border-radius: 12px; text-align: center;">
+                <p style="font-size: 18px; color: #f8fafc; margin: 0; font-weight: 500;">
+                    🎯 O modelo identifica <strong style="color: #14b8a6;">padrões nos indicadores</strong> que permitem prever alunos em risco <strong style="color: #14b8a6;">antes</strong> que a defasagem aconteça
+                </p>
+            </div>
         </div>
         
-        <div class="value-grid">
-            <div class="value-item">
-                <div class="icon-wrapper"><i class="fas fa-search"></i></div>
-                <div class="text-content">
-                    <div class="item-title">Diagnóstico Completo</div>
-                    <div class="item-desc">
-                        Análise profunda da evolução educacional de 2022 a 2024, identificando tendências e correlações.
-                    </div>
-                </div>
-            </div>
-            
-            <div class="value-item">
-                <div class="icon-wrapper"><i class="fas fa-bullseye"></i></div>
-                <div class="text-content">
-                    <div class="item-title">Alta Sensibilidade</div>
-                    <div class="item-desc">
-                        Modelo identifica <span class="highlight">85%</span> dos alunos em risco, permitindo intervenção preventiva eficaz.
-                    </div>
-                </div>
-            </div>
-            
-            <div class="value-item">
-                <div class="icon-wrapper"><i class="fas fa-laptop-code"></i></div>
-                <div class="text-content">
-                    <div class="item-title">Ferramenta Prática</div>
-                    <div class="item-desc">
-                        Aplicação Streamlit pronta para uso, democratizando o acesso à inteligência de dados.
-                    </div>
-                </div>
-            </div>
-            
-            <div class="value-item">
-                <div class="icon-wrapper"><i class="fas fa-lightbulb"></i></div>
-                <div class="text-content">
-                    <div class="item-title">Insights Acionáveis</div>
-                    <div class="item-desc">
-                        Recomendações estratégicas claras para maximizar o impacto social da Passos Mágicos.
-                    </div>
-                </div>
-            </div>
+        <!-- Footer -->
+        <div style="position: absolute; bottom: 20px; right: 60px; font-size: 14px; color: #64748b;">
+            Datathon FIAP 2024 - Passos Mágicos
         </div>
     </div>
 </body>

@@ -2,189 +2,153 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        .slide-container {
-            width: 1280px;
-            min-height: 720px;
-            background-color: #F5F5F5;
-            font-family: 'Inter', sans-serif;
-            color: #1A1A1A;
-            display: grid;
-            grid-template-columns: 1fr 1.2fr;
-            padding: 80px 80px 0 80px;
-            gap: 80px;
-        }
-        
-        .left-col {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .section-label {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #FF4B4B;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        
-        h1 {
-            font-size: 56px;
-            font-weight: 900;
-            line-height: 1;
-            margin-bottom: 40px;
-            letter-spacing: -2px;
-        }
-        
-        .insight-box {
-            border-left: 6px solid #1A1A1A;
-            padding-left: 30px;
-        }
-        
-        .insight-text {
-            font-size: 24px;
-            font-weight: 300;
-            line-height: 1.4;
-            color: #555;
-        }
-        
-        .highlight {
-            font-weight: 700;
-            color: #0068C9;
-        }
-        
-        .right-col {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .chart-container {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        .bar-item {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .bar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 10px;
-        }
-        
-        .feature-name {
-            font-size: 20px;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        
-        .feature-value {
-            font-size: 24px;
-            font-weight: 900;
-            color: #1A1A1A;
-        }
-        
-        .bar-bg {
-            width: 100%;
-            height: 12px;
-            background-color: #E0E0E0;
-        }
-        
-        .bar-fill {
-            height: 100%;
-            background-color: #0068C9;
-        }
-        
-        .bar-fill.primary {
-            background-color: #FF4B4B;
-        }
-        
-        .feature-desc {
-            font-size: 14px;
-            color: #888;
-            margin-top: 5px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features Mais Importantes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="slide-container">
-        <div class="left-col">
-            <div class="section-label">Features Mais Importantes</div>
-            <h1>O QUE DEFINE O RISCO?</h1>
+    <div class="slide-container" style="width: 1280px; min-height: 720px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); font-family: 'Inter', sans-serif; color: white; overflow: hidden;">
+        
+        <!-- Header (keep upper padding) -->
+        <div style="padding: 40px 60px 8px 60px;">
+            <h1 style="font-size: 42px; font-weight: 700; color: #f8fafc; margin: 0;">
+                🎯 Features Mais Importantes
+            </h1>
+            <div style="width: 120px; height: 4px; background: linear-gradient(90deg, #14b8a6, #06b6d4); margin-top: 12px; border-radius: 2px;"></div>
+        </div>
+
+        <!-- Main Content (reduced paddings/gaps) -->
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; padding: 8px 40px 8px 40px;">
             
-            <div class="insight-box">
-                <p class="insight-text">
-                    O indicador de <span class="highlight">Adequação ao Nível (IAN)</span> é o preditor dominante, responsável por 38% da decisão do modelo.
-                </p>
+            <!-- Left: Feature Importance Bars -->
+            <div>
+                <h2 style="font-size: 20px; font-weight: 600; color: #94a3b8; margin-bottom: 12px;">
+                    Importância no Modelo Preditivo
+                </h2>
+                
+                <!-- Feature Bars (tighter spacing) -->
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    
+                    <!-- INDE -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 16px; font-weight: 600; color: #f8fafc;">INDE</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #14b8a6;">34.7%</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 24px; border-radius: 12px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #14b8a6, #06b6d4); height: 100%; width: 100%; border-radius: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- IPV -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 16px; font-weight: 600; color: #f8fafc;">IPV (Ponto de Virada)</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #14b8a6;">16.1%</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 24px; border-radius: 12px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #14b8a6, #06b6d4); height: 100%; width: 46%; border-radius: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- IDA -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 16px; font-weight: 600; color: #f8fafc;">IDA (Desempenho Acadêmico)</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #14b8a6;">15.2%</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 24px; border-radius: 12px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #14b8a6, #06b6d4); height: 100%; width: 44%; border-radius: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- IAA -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 16px; font-weight: 600; color: #f8fafc;">IAA (Autoavaliação)</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #14b8a6;">12.7%</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 24px; border-radius: 12px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #14b8a6, #06b6d4); height: 100%; width: 37%; border-radius: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- IEG -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 16px; font-weight: 600; color: #f8fafc;">IEG (Engajamento)</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #14b8a6;">11.7%</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 24px; border-radius: 12px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #14b8a6, #06b6d4); height: 100%; width: 34%; border-radius: 12px;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- IPS -->
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span style="font-size: 16px; font-weight: 600; color: #f8fafc;">IPS (Psicossocial)</span>
+                            <span style="font-size: 16px; font-weight: 700; color: #14b8a6;">9.6%</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.1); height: 24px; border-radius: 12px; overflow: hidden;">
+                            <div style="background: linear-gradient(90deg, #14b8a6, #06b6d4); height: 100%; width: 28%; border-radius: 12px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right: Interpretation (tighter spacing and smaller paddings) -->
+            <div>
+                <h2 style="font-size: 20px; font-weight: 600; color: #94a3b8; margin-bottom: 12px;">
+                    O que isso significa?
+                </h2>
+                
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    
+                    <!-- Insight 1 -->
+                    <div style="background: rgba(20, 184, 166, 0.1); padding: 12px; border-radius: 12px;">
+                        <div style="font-size: 18px; font-weight: 600; color: #14b8a6; margin-bottom: 6px;">
+                            📊 INDE é o Preditor Principal
+                        </div>
+                        <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
+                            O índice geral de desenvolvimento representa 35% da decisão do modelo, refletindo o desempenho global do aluno.
+                        </div>
+                    </div>
+                    
+                    <!-- Insight 2 -->
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 12px;">
+                        <div style="font-size: 18px; font-weight: 600; color: #f8fafc; margin-bottom: 6px;">
+                            🔄 IPV indica Progresso
+                        </div>
+                        <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
+                            O Ponto de Virada (16%) mostra a capacidade de recuperação e evolução do aluno ao longo do tempo.
+                        </div>
+                    </div>
+                    
+                    <!-- Insight 3 -->
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 12px; border-radius: 12px;">
+                        <div style="font-size: 18px; font-weight: 600; color: #f8fafc; margin-bottom: 6px;">
+                            📚 IDA reflete Aprendizado
+                        </div>
+                        <div style="font-size: 14px; color: #94a3b8; line-height: 1.6;">
+                            O Desempenho Acadêmico (15%) mede diretamente as notas em Matemática, Português e Inglês.
+                        </div>
+                    </div>
+                    
+                    <!-- Key Takeaway (slightly smaller padding) -->
+                    <div style="background: rgba(6, 182, 212, 0.15); padding: 12px; border-radius: 8px; margin-top: 4px;">
+                        <div style="font-size: 14px; color: #67e8f9; font-weight: 500;">
+                            💡 Combinação de indicadores permite identificar alunos em risco antes da defasagem acontecer.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="right-col">
-            <div class="chart-container">
-                <div class="bar-item">
-                    <div class="bar-header">
-                        <span class="feature-name">1. IAN (Adequação ao Nível)</span>
-                        <span class="feature-value" style="color: #FF4B4B;">38.0%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill primary" style="width: 100%;"></div>
-                    </div>
-                    <span class="feature-desc">Mede a defasagem idade-série direta.</span>
-                </div>
-                
-                <div class="bar-item">
-                    <div class="bar-header">
-                        <span class="feature-name">2. Média dos Indicadores</span>
-                        <span class="feature-value">11.2%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 29%;"></div>
-                    </div>
-                    <span class="feature-desc">Desempenho global em todos os indicadores.</span>
-                </div>
-                
-                <div class="bar-item">
-                    <div class="bar-header">
-                        <span class="feature-name">3. IAA (Autoavaliação)</span>
-                        <span class="feature-value">10.5%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 28%;"></div>
-                    </div>
-                    <span class="feature-desc">Percepção do aluno sobre seu próprio desempenho.</span>
-                </div>
-                
-                <div class="bar-item">
-                    <div class="bar-header">
-                        <span class="feature-name">4. IEG (Engajamento)</span>
-                        <span class="feature-value">10.1%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 27%;"></div>
-                    </div>
-                    <span class="feature-desc">Nível de participação e comprometimento.</span>
-                </div>
-                
-                <div class="bar-item">
-                    <div class="bar-header">
-                        <span class="feature-name">5. IPS (Psicossocial)</span>
-                        <span class="feature-value">8.6%</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 23%;"></div>
-                    </div>
-                    <span class="feature-desc">Aspectos emocionais e sociais do aluno.</span>
-                </div>
-            </div>
+        <!-- Footer (lifted slightly to fit) -->
+        <div style="position: absolute; bottom: 12px; right: 60px; font-size: 14px; color: #64748b;">
+            Datathon FIAP 2024 - Passos Mágicos
         </div>
     </div>
 </body>
