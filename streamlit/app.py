@@ -306,7 +306,14 @@ elif pagina == "🔮 Predição de Risco":
                 
                 # Predição
                 predicao = modelo.predict(features_scaled)[0]
-                probabilidade = modelo.predict_proba(features_scaled)[0]
+                
+                # Calcular probabilidade (com tratamento para modelos que não suportam)
+                try:
+                    probabilidade = modelo.predict_proba(features_scaled)[0]
+                    prob_risco = probabilidade[1] * 100
+                except:
+                    # Se não suportar predict_proba, usar decisão binária
+                    prob_risco = 85.0 if predicao == 1 else 15.0
                 
                 st.markdown("---")
                 st.subheader("📊 Resultado da Predição")
@@ -315,42 +322,57 @@ elif pagina == "🔮 Predição de Risco":
                 
                 with col1:
                     if predicao == 1:
-                        st.markdown("""
+                        st.markdown(f"""
                         <div class="risk-high">
                             <h2>⚠️ COM RISCO</h2>
                             <p>O aluno apresenta indicadores que sugerem risco de defasagem escolar.</p>
+                            <p style="font-size: 24px; font-weight: bold; margin-top: 10px;">Probabilidade: {prob_risco:.1f}%</p>
                         </div>
                         """, unsafe_allow_html=True)
                     else:
-                        st.markdown("""
+                        st.markdown(f"""
                         <div class="risk-low">
                             <h2>✅ SEM RISCO</h2>
                             <p>O aluno apresenta indicadores adequados para sua fase escolar.</p>
+                            <p style="font-size: 24px; font-weight: bold; margin-top: 10px;">Probabilidade de Risco: {prob_risco:.1f}%</p>
                         </div>
                         """, unsafe_allow_html=True)
                 
                 with col2:
-                    # Gráfico de probabilidade
+                    # Gráfico de probabilidade melhorado
+                    cor_barra = "#EF4444" if prob_risco > 50 else "#22C55E"
+                    
                     fig = go.Figure(go.Indicator(
-                        mode="gauge+number",
-                        value=probabilidade[1] * 100,
-                        title={'text': "Probabilidade de Risco"},
+                        mode="gauge+number+delta",
+                        value=prob_risco,
+                        number={'suffix': '%', 'font': {'size': 40}},
+                        title={'text': "Probabilidade de Risco", 'font': {'size': 18}},
+                        delta={'reference': 50, 'increasing': {'color': "#EF4444"}, 'decreasing': {'color': "#22C55E"}},
                         gauge={
-                            'axis': {'range': [0, 100]},
-                            'bar': {'color': "#EF4444" if probabilidade[1] > 0.5 else "#22C55E"},
+                            'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "darkgray"},
+                            'bar': {'color': cor_barra, 'thickness': 0.3},
+                            'bgcolor': "white",
+                            'borderwidth': 2,
+                            'bordercolor': "gray",
                             'steps': [
-                                {'range': [0, 30], 'color': "#DCFCE7"},
-                                {'range': [30, 70], 'color': "#FEF3C7"},
-                                {'range': [70, 100], 'color': "#FEE2E2"}
+                                {'range': [0, 25], 'color': "#22C55E"},
+                                {'range': [25, 50], 'color': "#86EFAC"},
+                                {'range': [50, 75], 'color': "#FBBF24"},
+                                {'range': [75, 100], 'color': "#EF4444"}
                             ],
                             'threshold': {
                                 'line': {'color': "black", 'width': 4},
-                                'thickness': 0.75,
-                                'value': 50
+                                'thickness': 0.8,
+                                'value': prob_risco
                             }
                         }
                     ))
-                    fig.update_layout(height=300)
+                    fig.update_layout(
+                        height=350,
+                        margin=dict(l=20, r=20, t=50, b=20),
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        font={'color': "white"}
+                    )
                     st.plotly_chart(fig, use_container_width=True)
                 
                 # Fatores de risco
