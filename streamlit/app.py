@@ -51,10 +51,18 @@ st.markdown("""
         border-radius: 5px;
     }
     .risk-low {
-        background-color: #DCFCE7;
+        background-color: #166534;
         border-left: 4px solid #22C55E;
         padding: 1rem;
         border-radius: 5px;
+        color: #ffffff;
+    }
+    .risk-low h2 {
+        color: #86EFAC;
+        margin-bottom: 10px;
+    }
+    .risk-low p {
+        color: #ffffff;
     }
 </style>
 """, unsafe_allow_html=True)
