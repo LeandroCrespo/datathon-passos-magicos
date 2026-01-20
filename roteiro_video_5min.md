@@ -1,6 +1,6 @@
 # Roteiro Otimizado para Vídeo de 5 Minutos (10 Slides)
 
-**Objetivo:** Apresentação direta e focada nos resultados, sem introdução institucional longa.
+**Objetivo:** Apresentação direta e focada nos resultados do modelo de 3 classes de risco.
 
 ---
 
@@ -10,12 +10,12 @@
 |:---:|---|:---:|---|
 | 1 | Capa | 15s | Título e contexto do projeto. |
 | 2 | O Desafio | 30s | Objetivo: prever risco de defasagem precocemente. |
-| 3 | Os Dados | 30s | Dataset PEDE 2022-2024 (3 anos, ~3000 registros). |
-| 4 | Descobertas | 45s | Aumento de alunos na fase correta, Engajamento e Ponto de Virada. |
-| 5 | Modelo | 45s | Random Forest com SMOTE, Recall 85%, AUC-ROC 87%. |
-| 6 | Features | 45s | IAN como principal preditor. |
+| 3 | Os Dados | 30s | Dataset PEDE 2024 (860 alunos, 6 indicadores). |
+| 4 | Descobertas | 45s | 70% em defasagem, padrões identificados. |
+| 5 | Modelo | 45s | Random Forest 3 classes, Acurácia 75.6%, Recall 82%. |
+| 6 | Features | 45s | INDE como principal preditor (34.7%). |
 | 7 | Streamlit | 30s | Ferramenta para uso da equipe pedagógica. |
-| 8 | Recomendações | 30s | Ações para alunos (suporte) e ONG (engajamento). |
+| 8 | Recomendações | 30s | Ações para alunos em cada nível de risco. |
 | 9 | Conclusão | 15s | Resumo do valor entregue. |
 | 10 | Obrigado | 15s | Encerramento. |
 | **Total** | | **~300s (5 min)** | |
@@ -25,31 +25,58 @@
 ### Script Detalhado
 
 **(Slide 1: Capa - 15s)**
-> "Olá. Sou Leandro Leme Crespo e apresento agora o projeto de Data Analytics desenvolvido para o Datathon FIAP, em parceria com a Associação Passos Mágicos. Nosso foco foi criar um modelo preditivo para identificar o risco de defasagem escolar."
+> "Olá. Sou Leandro Leme Crespo e apresento agora o projeto de Data Analytics desenvolvido para o Datathon FIAP, em parceria com a Associação Passos Mágicos. Nosso foco foi criar um modelo preditivo para identificar o risco de defasagem educacional."
 
 **(Slide 2: O Desafio - 30s)**
-> "O grande desafio que enfrentamos foi: como usar os dados para agir antes que o aluno reprove ou evada? Nosso objetivo foi claro: analisar o histórico educacional e construir uma ferramenta capaz de alertar a equipe pedagógica sobre alunos em risco, permitindo intervenções preventivas."
+> "O grande desafio que enfrentamos foi: como usar os dados para agir antes que o aluno fique defasado? Nosso objetivo foi claro: analisar os indicadores educacionais e construir uma ferramenta capaz de alertar a equipe pedagógica sobre alunos em risco, permitindo intervenções preventivas."
 
 **(Slide 3: Os Dados - 30s)**
-> "Trabalhamos com a Pesquisa de Desenvolvimento Educacional (PEDE) de 2022, 2023 e 2024. Analisamos cerca de 3.000 registros de alunos, cruzando indicadores acadêmicos como IDA, psicossociais como IPS, e de engajamento como IEG, para entender a trajetória de desenvolvimento."
+> "Trabalhamos com os dados do PEDE 2024, contendo informações de 860 alunos. Analisamos 6 indicadores: IDA - Desempenho Acadêmico, IEG - Engajamento, IAA - Autoavaliação, IPS - Psicossocial, IPV - Ponto de Virada, e o INDE - índice geral de desenvolvimento."
 
 **(Slide 4: Principais Descobertas - 45s)**
-> "Nossa análise exploratória trouxe insights importantes. Primeiro, houve um aumento significativo de alunos na fase correta: de 29% em 2022 para 42% em 2024. Isso mostra que as ações da ONG estão ajudando os alunos a se alinharem com a fase ideal para sua idade. Segundo, descobrimos que o Engajamento é o motor do desenvolvimento. E terceiro, o Ponto de Virada se mostrou um marcador crucial de recuperação."
+> "Nossa análise revelou dados importantes: 70% dos alunos estão em algum nível de defasagem. Apenas 30% estão sem risco - em fase adequada. 67% têm risco moderado - atrasados 1 a 2 fases. E 3% têm risco severo - atrasados 3 ou mais fases. Identificamos que alunos em risco apresentam indicadores consistentemente mais baixos em todas as dimensões."
 
 **(Slide 5: Modelo Preditivo - 45s)**
-> "Desenvolvemos um modelo de Machine Learning usando Random Forest com técnica de balanceamento SMOTE, treinado com dados dos 3 anos. O modelo alcançou 85% de Recall, ou seja, consegue identificar 85% dos alunos que realmente estão em risco. O AUC-ROC de 87% indica excelente capacidade de discriminação. Priorizamos o Recall porque, neste contexto, é mais importante identificar o máximo de alunos em risco possível."
+> "Desenvolvemos um modelo Random Forest com 3 classes de risco, seguindo a metodologia oficial da Passos Mágicos. O modelo alcançou 75,6% de acurácia geral e 82% de recall para identificar alunos em risco moderado. Importante destacar: não usamos o IAN como feature, pois ele é derivado da defasagem. Usamos apenas os indicadores de desempenho para identificar padrões."
 
 **(Slide 6: Features Mais Importantes - 45s)**
-> "Mas o que define esse risco? O modelo nos mostrou que a Adequação ao Nível, o IAN, é o indicador mais importante, seguido pela Média dos Indicadores e pelo indicador de Autoavaliação. Isso confirma que a defasagem idade-série é o sinal de alerta mais forte, mas que os aspectos emocionais e sociais também são fundamentais."
+> "O modelo nos mostrou que o INDE é o indicador mais importante, responsável por 35% da decisão. Em seguida vem o IPV - Ponto de Virada com 16%, o IDA - Desempenho Acadêmico com 15%, IAA - Autoavaliação com 13%, IEG - Engajamento com 12%, e IPS - Psicossocial com 10%. Essa combinação permite identificar padrões de risco antes que a defasagem aconteça."
 
 **(Slide 7: Aplicação Streamlit - 30s)**
-> "Para colocar essa inteligência na mão da equipe, criamos uma aplicação interativa. Nela, é possível visualizar a evolução da ONG e, principalmente, fazer a predição de risco para novos alunos em tempo real, democratizando o acesso à ciência de dados."
+> "Para colocar essa inteligência na mão da equipe, criamos uma aplicação interativa no Streamlit. Nela, é possível visualizar o dashboard com a evolução dos indicadores e, principalmente, fazer a predição de risco inserindo os indicadores de um aluno e recebendo a classificação: Sem Risco, Risco Moderado ou Risco Severo."
 
 **(Slide 8: Recomendações - 30s)**
-> "Com base nisso, recomendamos: para os alunos em risco, foco total em suporte psicossocial e acompanhamento intensivo. Para a organização, sugerimos usar o modelo como triagem na entrada e investir em programas que aumentem o engajamento, pois é ele que transforma o desempenho."
+> "Com base nos padrões identificados, recomendamos: para alunos em risco severo, acompanhamento individualizado imediato. Para risco moderado, monitoramento mensal dos indicadores. E para todos, foco especial no INDE e IPV, que são os principais preditores de defasagem."
 
 **(Slide 9: Conclusão - 15s)**
-> "Entregamos, portanto, um diagnóstico completo, um modelo preditivo com 85% de sensibilidade e uma ferramenta prática. É o uso de dados gerando impacto real na ponta."
+> "Entregamos uma análise completa dos dados, um modelo preditivo com 3 classes de risco e 75,6% de acurácia, e uma ferramenta prática no Streamlit. O grande valor é permitir intervenção preventiva: identificar alunos em risco antes que a defasagem aconteça."
 
 **(Slide 10: Obrigado - 15s)**
-> "Agradeço a atenção de todos. O código completo está disponível no GitHub e a aplicação Streamlit está publicada para uso. Muito obrigado!"
+> "Agradeço a atenção de todos. O código completo está disponível no GitHub e a aplicação Streamlit está publicada no Community Cloud. Muito obrigado!"
+
+---
+
+### Notas Técnicas
+
+#### Métricas do Modelo
+- **Acurácia:** 75.58%
+- **Recall Sem Risco:** 69%
+- **Recall Risco Moderado:** 82%
+- **Recall Risco Severo:** 17% (poucos exemplos)
+
+#### Feature Importance
+1. INDE: 34.7%
+2. IPV: 16.1%
+3. IDA: 15.2%
+4. IAA: 12.7%
+5. IEG: 11.7%
+6. IPS: 9.6%
+
+#### Classificação de Risco (Metodologia Passos Mágicos)
+- **Sem Risco:** D ≥ 0 (em fase ou adiantado)
+- **Risco Moderado:** 0 > D ≥ -2 (1-2 fases atrasado)
+- **Risco Severo:** D < -2 (3+ fases atrasado)
+
+#### Links
+- GitHub: https://github.com/LeandroCrespo/datathon-passos-magicos
+- Streamlit: [URL do deploy no Community Cloud]
