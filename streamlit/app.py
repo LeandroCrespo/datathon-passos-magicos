@@ -615,7 +615,7 @@ elif pagina == "📈 Sobre o Modelo":
     
     # Gráfico de importância (valores do modelo treinado)
     features_imp = {
-        'INDE': 0.347,
+        'INDE': 0.374,
         'IPV': 0.161,
         'IDA': 0.152,
         'IAA': 0.127,
