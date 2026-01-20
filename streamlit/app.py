@@ -45,10 +45,18 @@ st.markdown("""
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .risk-high {
-        background-color: #FEE2E2;
+        background-color: #991B1B;
         border-left: 4px solid #EF4444;
         padding: 1rem;
         border-radius: 5px;
+        color: #ffffff;
+    }
+    .risk-high h2 {
+        color: #FCA5A5;
+        margin-bottom: 10px;
+    }
+    .risk-high p {
+        color: #ffffff;
     }
     .risk-low {
         background-color: #166534;
