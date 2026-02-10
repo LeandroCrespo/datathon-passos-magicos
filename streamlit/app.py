@@ -51,13 +51,26 @@ st.markdown("""
         border-radius: 5px;
         color: #ffffff;
     }
-    .risk-high h2 {
-        color: #FCA5A5;
-        margin-bottom: 10px;
-    }
-    .risk-high p {
+    .risk-high h2 { color: #FCA5A5; margin-bottom: 10px; }
+    .risk-high p { color: #ffffff; }
+    .risk-moderate {
+        background-color: #92400E;
+        border-left: 4px solid #F59E0B;
+        padding: 1rem;
+        border-radius: 5px;
         color: #ffffff;
     }
+    .risk-moderate h2 { color: #FCD34D; margin-bottom: 10px; }
+    .risk-moderate p { color: #ffffff; }
+    .risk-attention {
+        background-color: #854D0E;
+        border-left: 4px solid #FBBF24;
+        padding: 1rem;
+        border-radius: 5px;
+        color: #ffffff;
+    }
+    .risk-attention h2 { color: #FDE68A; margin-bottom: 10px; }
+    .risk-attention p { color: #ffffff; }
     .risk-low {
         background-color: #166534;
         border-left: 4px solid #22C55E;
@@ -65,13 +78,8 @@ st.markdown("""
         border-radius: 5px;
         color: #ffffff;
     }
-    .risk-low h2 {
-        color: #86EFAC;
-        margin-bottom: 10px;
-    }
-    .risk-low p {
-        color: #ffffff;
-    }
+    .risk-low h2 { color: #86EFAC; margin-bottom: 10px; }
+    .risk-low p { color: #ffffff; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -80,7 +88,6 @@ st.markdown("""
 def carregar_dados():
     """Carrega os dados do arquivo Excel"""
     try:
-        # Tentar diferentes caminhos
         paths = [
             'data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx',
             '../data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx',
@@ -135,6 +142,17 @@ def carregar_modelo():
         st.error(f"Erro ao carregar modelo: {e}")
         return None, None, None, None
 
+def classificar_nivel_risco(prob):
+    """Classifica o nível de risco baseado na probabilidade"""
+    if prob < 0.30:
+        return 'Sem Risco', '✅', 'risk-low'
+    elif prob < 0.60:
+        return 'Atenção', '⚡', 'risk-attention'
+    elif prob < 0.85:
+        return 'Risco Moderado', '⚠️', 'risk-moderate'
+    else:
+        return 'Risco Alto', '🚨', 'risk-high'
+
 # Carregar dados e modelo
 df = carregar_dados()
 modelo, scaler, le_dict, modelo_info = carregar_modelo()
@@ -154,11 +172,10 @@ if pagina == "🏠 Visão Geral":
     st.markdown('<p class="sub-header">Análise de Indicadores Educacionais e Predição de Risco de Defasagem</p>', unsafe_allow_html=True)
     
     if df is not None:
-        # Métricas principais
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            st.metric("Total de Alunos", f"{len(df):,}")
+            st.metric("Total de Registros", f"{len(df):,}")
         with col2:
             anos = df['ANO_PEDE'].nunique()
             st.metric("Anos Analisados", f"{anos}")
@@ -174,7 +191,6 @@ if pagina == "🏠 Visão Geral":
         
         st.markdown("---")
         
-        # Gráficos principais
         col1, col2 = st.columns(2)
         
         with col1:
@@ -199,7 +215,6 @@ if pagina == "🏠 Visão Geral":
                             color_discrete_sequence=['#22C55E', '#EF4444'])
                 st.plotly_chart(fig, use_container_width=True)
         
-        # Indicadores médios
         st.subheader("📈 Indicadores Médios")
         indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV', 'IPP']
         medias = []
@@ -221,14 +236,12 @@ elif pagina == "📈 Análise Exploratória":
     st.markdown('<p class="main-header">📈 Análise Exploratória</p>', unsafe_allow_html=True)
     
     if df is not None:
-        # Filtros
         st.sidebar.subheader("Filtros")
         anos_disponiveis = sorted(df['ANO_PEDE'].unique())
         ano_selecionado = st.sidebar.multiselect("Ano", anos_disponiveis, default=anos_disponiveis)
         
         df_filtrado = df[df['ANO_PEDE'].isin(ano_selecionado)]
         
-        # Análise de correlação
         st.subheader("🔗 Correlação entre Indicadores")
         indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV', 'IPP']
         ind_disponiveis = [i for i in indicadores if i in df_filtrado.columns]
@@ -240,7 +253,6 @@ elif pagina == "📈 Análise Exploratória":
                            color_continuous_scale='RdBu_r')
             st.plotly_chart(fig, use_container_width=True)
         
-        # Distribuição dos indicadores
         st.subheader("📊 Distribuição dos Indicadores")
         indicador_sel = st.selectbox("Selecione o indicador:", ind_disponiveis)
         
@@ -250,7 +262,6 @@ elif pagina == "📈 Análise Exploratória":
                               color_discrete_sequence=['#3B82F6'])
             st.plotly_chart(fig, use_container_width=True)
         
-        # Análise por classe de risco
         st.subheader("📊 Indicadores por Classe de Risco")
         if 'DEFASAGEM' in df_filtrado.columns:
             df_filtrado['DEFASAGEM'] = pd.to_numeric(df_filtrado['DEFASAGEM'], errors='coerce')
@@ -278,7 +289,10 @@ elif pagina == "🔮 Predição de Risco":
     st.markdown('<p class="main-header">🔮 Predição de Risco de Defasagem</p>', unsafe_allow_html=True)
     
     if modelo is not None and modelo_info is not None:
-        st.success(f"✅ Modelo carregado: **{modelo_info['modelo_nome']}** | Acurácia: **{modelo_info['accuracy']*100:.1f}%**")
+        st.success(f"✅ Modelo carregado: **{modelo_info['modelo_nome']}** | "
+                   f"Acurácia: **{modelo_info['accuracy']*100:.1f}%** | "
+                   f"AUC-ROC: **{modelo_info['auc_roc']*100:.1f}%** | "
+                   f"CV: **{modelo_info.get('cv_accuracy_mean', 0)*100:.1f}% (+/- {modelo_info.get('cv_accuracy_std', 0)*100:.1f}%)**")
         
         st.markdown("---")
         st.subheader("📝 Insira os dados do aluno:")
@@ -297,17 +311,37 @@ elif pagina == "🔮 Predição de Risco":
             st.markdown("**Notas por Matéria**")
             mat = st.slider("Matemática", 0.0, 10.0, 7.0, 0.1)
             por = st.slider("Português", 0.0, 10.0, 7.0, 0.1)
-            ing = st.slider("Inglês", 0.0, 10.0, 7.0, 0.1)
         
         with col3:
             st.markdown("**Dados Contextuais**")
             idade = st.number_input("Idade", min_value=6, max_value=25, value=12)
-            ano_ingresso = st.number_input("Ano de Ingresso", min_value=2015, max_value=2024, value=2022)
-            genero = st.selectbox("Gênero", ["Feminino", "Masculino"])
+            ano_ingresso = st.number_input("Ano de Ingresso", min_value=2015, max_value=2025, value=2022)
+            genero = st.selectbox("Gênero", ["Feminino", "Masculino", "Menina", "Menino"])
             instituicao = st.selectbox("Instituição de Ensino", 
-                                       ["Pública", "Privada", "Privada - Programa de apadrinhamento"])
+                                       ["Pública", "Escola Pública", "Privada",
+                                        "Privada - Programa de Apadrinhamento",
+                                        "Privada - Programa de apadrinhamento",
+                                        "Privada *Parcerias com Bolsa 100%",
+                                        "Privada - Pagamento por *Empresa Parceira",
+                                        "Escola JP II", "Rede Decisão",
+                                        "Bolsista Universitário *Formado (a)",
+                                        "Concluiu o 3º EM", "Desconhecido",
+                                        "Nenhuma das opções acima"])
         
         st.markdown("---")
+        
+        # Níveis de risco explicação
+        with st.expander("ℹ️ Como funciona a classificação por níveis de risco?"):
+            st.markdown("""
+            O modelo gera uma **probabilidade** de risco que é convertida em 4 níveis:
+            
+            | Probabilidade | Nível | Ação Sugerida |
+            |---------------|-------|---------------|
+            | < 30% | ✅ **Sem Risco** | Acompanhamento normal |
+            | 30% - 60% | ⚡ **Atenção** | Monitoramento preventivo |
+            | 60% - 85% | ⚠️ **Risco Moderado** | Intervenção pedagógica |
+            | > 85% | 🚨 **Risco Alto** | Intervenção urgente |
+            """)
         
         if st.button("🔮 Realizar Predição", type="primary", use_container_width=True):
             try:
@@ -315,22 +349,18 @@ elif pagina == "🔮 Predição de Risco":
                 genero_enc = le_dict['GÊNERO'].transform([genero])[0]
                 instituicao_enc = le_dict['INSTITUIÇÃO DE ENSINO'].transform([instituicao])[0]
                 
-                # Criar array de features na ordem correta
-                features = np.array([[ida, ieg, iaa, ips, ipv, idade, ano_ingresso, mat, por, ing, genero_enc, instituicao_enc]])
+                # Criar array de features na ordem correta (11 features, sem ING)
+                features = np.array([[ida, ieg, iaa, ips, ipv, idade, ano_ingresso, mat, por, genero_enc, instituicao_enc]])
                 
                 # Normalizar
                 features_scaled = scaler.transform(features)
                 
-                # Predição
-                predicao = modelo.predict(features_scaled)[0]
+                # Predição com probabilidade
+                probabilidade = modelo.predict_proba(features_scaled)[0]
+                prob_risco = probabilidade[1]
                 
-                # Calcular probabilidade (com tratamento para modelos que não suportam)
-                try:
-                    probabilidade = modelo.predict_proba(features_scaled)[0]
-                    prob_risco = probabilidade[1] * 100
-                except:
-                    # Se não suportar predict_proba, usar decisão binária
-                    prob_risco = 85.0 if predicao == 1 else 15.0
+                # Classificar nível de risco
+                nivel, emoji, css_class = classificar_nivel_risco(prob_risco)
                 
                 st.markdown("---")
                 st.subheader("📊 Resultado da Predição")
@@ -338,49 +368,44 @@ elif pagina == "🔮 Predição de Risco":
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    if predicao == 1:
-                        st.markdown(f"""
-                        <div class="risk-high">
-                            <h2>⚠️ COM RISCO</h2>
-                            <p>O aluno apresenta indicadores que sugerem risco de defasagem escolar.</p>
-                            <p style="font-size: 24px; font-weight: bold; margin-top: 10px;">Probabilidade: {prob_risco:.1f}%</p>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    else:
-                        st.markdown(f"""
-                        <div class="risk-low">
-                            <h2>✅ SEM RISCO</h2>
-                            <p>O aluno apresenta indicadores adequados para sua fase escolar.</p>
-                            <p style="font-size: 24px; font-weight: bold; margin-top: 10px;">Probabilidade de Risco: {prob_risco:.1f}%</p>
-                        </div>
-                        """, unsafe_allow_html=True)
+                    descricoes = {
+                        'Sem Risco': 'O aluno apresenta indicadores adequados para sua fase escolar. Manter acompanhamento regular.',
+                        'Atenção': 'O aluno apresenta alguns sinais que merecem atenção. Recomenda-se monitoramento preventivo.',
+                        'Risco Moderado': 'O aluno apresenta indicadores que sugerem risco moderado de defasagem. Intervenção pedagógica recomendada.',
+                        'Risco Alto': 'O aluno apresenta indicadores críticos de risco de defasagem. Intervenção urgente necessária.'
+                    }
+                    
+                    st.markdown(f"""
+                    <div class="{css_class}">
+                        <h2>{emoji} {nivel.upper()}</h2>
+                        <p>{descricoes[nivel]}</p>
+                        <p style="font-size: 24px; font-weight: bold; margin-top: 10px;">Probabilidade de Risco: {prob_risco*100:.1f}%</p>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
                 with col2:
-                    # Gráfico de probabilidade melhorado
-                    cor_barra = "#EF4444" if prob_risco > 50 else "#22C55E"
-                    
+                    # Gauge com 4 níveis
                     fig = go.Figure(go.Indicator(
-                        mode="gauge+number+delta",
-                        value=prob_risco,
+                        mode="gauge+number",
+                        value=prob_risco * 100,
                         number={'suffix': '%', 'font': {'size': 40}},
                         title={'text': "Probabilidade de Risco", 'font': {'size': 18}},
-                        delta={'reference': 50, 'increasing': {'color': "#EF4444"}, 'decreasing': {'color': "#22C55E"}},
                         gauge={
-                            'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "darkgray"},
-                            'bar': {'color': cor_barra, 'thickness': 0.3},
+                            'axis': {'range': [0, 100], 'tickwidth': 1},
+                            'bar': {'color': "darkgray", 'thickness': 0.2},
                             'bgcolor': "white",
                             'borderwidth': 2,
                             'bordercolor': "gray",
                             'steps': [
-                                {'range': [0, 25], 'color': "#22C55E"},
-                                {'range': [25, 50], 'color': "#86EFAC"},
-                                {'range': [50, 75], 'color': "#FBBF24"},
-                                {'range': [75, 100], 'color': "#EF4444"}
+                                {'range': [0, 30], 'color': "#22C55E"},
+                                {'range': [30, 60], 'color': "#FBBF24"},
+                                {'range': [60, 85], 'color': "#F97316"},
+                                {'range': [85, 100], 'color': "#EF4444"}
                             ],
                             'threshold': {
                                 'line': {'color': "black", 'width': 4},
                                 'thickness': 0.8,
-                                'value': prob_risco
+                                'value': prob_risco * 100
                             }
                         }
                     ))
@@ -388,45 +413,77 @@ elif pagina == "🔮 Predição de Risco":
                         height=350,
                         margin=dict(l=20, r=20, t=50, b=20),
                         paper_bgcolor='rgba(0,0,0,0)',
-                        font={'color': "white"}
                     )
                     st.plotly_chart(fig, use_container_width=True)
                 
-                # Fatores de risco
+                # Feature Importance
                 st.subheader("📈 Fatores que Influenciaram a Predição")
                 
                 feature_importance = modelo_info.get('feature_importance', {})
                 if feature_importance:
+                    # Nomes legíveis
+                    nomes = {
+                        'IDA': 'Desempenho Acadêmico (IDA)',
+                        'IEG': 'Engajamento (IEG)',
+                        'IAA': 'Autoavaliação (IAA)',
+                        'IPS': 'Psicossocial (IPS)',
+                        'IPV': 'Ponto de Virada (IPV)',
+                        'IDADE': 'Idade',
+                        'ANO INGRESSO': 'Ano de Ingresso',
+                        'MAT': 'Nota Matemática',
+                        'POR': 'Nota Português',
+                        'GÊNERO_ENC': 'Gênero',
+                        'INSTITUIÇÃO DE ENSINO_ENC': 'Instituição de Ensino',
+                    }
+                    
                     df_imp = pd.DataFrame({
-                        'Feature': list(feature_importance.keys()),
-                        'Importância': list(feature_importance.values())
+                        'Feature': [nomes.get(k, k) for k in feature_importance.keys()],
+                        'Importância': [v * 100 for v in feature_importance.values()]
                     }).sort_values('Importância', ascending=True)
                     
                     fig = px.bar(df_imp, x='Importância', y='Feature', orientation='h',
-                                color='Importância', color_continuous_scale='Blues')
+                                color='Importância', color_continuous_scale='Blues',
+                                labels={'Importância': 'Importância (%)'})
                     fig.update_layout(showlegend=False, height=400)
                     st.plotly_chart(fig, use_container_width=True)
                 
-                # Recomendações
+                # Recomendações por nível
                 st.subheader("💡 Recomendações")
-                if predicao == 1:
+                if nivel == 'Risco Alto':
+                    st.error("""
+                    **Ações Urgentes:**
+                    - 🚨 Intervenção pedagógica imediata
+                    - 👥 Avaliação psicossocial completa
+                    - 📊 Monitoramento semanal dos indicadores
+                    - 🎯 Plano de recuperação personalizado
+                    - 👨‍👩‍👧 Contato com a família
+                    """)
+                elif nivel == 'Risco Moderado':
                     st.warning("""
                     **Ações Recomendadas:**
                     - 📚 Acompanhamento pedagógico individualizado
                     - 👥 Avaliação psicossocial
-                    - 📊 Monitoramento frequente dos indicadores
+                    - 📊 Monitoramento quinzenal dos indicadores
                     - 🎯 Plano de intervenção personalizado
                     """)
-                else:
+                elif nivel == 'Atenção':
                     st.info("""
-                    **Ações Recomendadas:**
+                    **Ações Preventivas:**
+                    - 📈 Monitoramento mensal dos indicadores
+                    - 🎯 Estabelecer metas de desenvolvimento
+                    - 📚 Reforço em áreas com menor desempenho
+                    """)
+                else:
+                    st.success("""
+                    **Manutenção:**
                     - ✅ Manter acompanhamento regular
                     - 📈 Continuar estimulando o engajamento
-                    - 🎯 Estabelecer metas de desenvolvimento
+                    - 🎯 Estabelecer metas de evolução
                     """)
                     
             except Exception as e:
                 st.error(f"Erro na predição: {e}")
+                st.info("Verifique se os valores de Gênero e Instituição são compatíveis com os dados de treino.")
     else:
         st.warning("⚠️ Modelo não carregado. Execute o notebook de treinamento primeiro.")
         st.info("""
@@ -462,19 +519,35 @@ elif pagina == "📋 Sobre o Projeto":
     
     ## 🤖 Modelo de Machine Learning
     
-    Foram testados **10 algoritmos diferentes** de Machine Learning:
+    Foram testados **4 algoritmos** de Machine Learning:
     - Logistic Regression
-    - KNN
-    - SVM
-    - Decision Tree
+    - SVM (RBF)
     - Random Forest
-    - Gradient Boosting
-    - XGBoost
-    - AdaBoost
-    - MLP (Rede Neural)
-    - Ensemble Voting
+    - **Gradient Boosting** ← Selecionado
     
-    O modelo final foi selecionado com base na **acurácia**, **AUC-ROC** e **estabilidade** na validação cruzada.
+    ### Resultados do Modelo Final (Gradient Boosting)
+    
+    | Métrica | Teste (80/20) | CV (Stratified 5-fold) |
+    |---------|---------------|------------------------|
+    | Acurácia | 78.7% | 78.5% (+/- 1.1%) |
+    | AUC-ROC | 86.2% | 85.1% (+/- 1.9%) |
+    | F1-Score | 82.7% | 82.5% (+/- 0.9%) |
+    
+    ### Níveis de Risco
+    
+    | Probabilidade | Nível | % Real com Risco |
+    |---------------|-------|------------------|
+    | < 30% | Sem Risco | 10.0% |
+    | 30% - 60% | Atenção | 44.6% |
+    | 60% - 85% | Risco Moderado | 74.8% |
+    | > 85% | Risco Alto | 90.5% |
+    
+    ### Decisões Técnicas
+    
+    - **Remoção do Inglês (ING):** Apenas 33% de preenchimento em 2022, ausente nos demais anos.
+      Mantê-lo reduziria o dataset de 2.467 para ~660 registros.
+    - **Split estratificado por ano:** Garante representatividade temporal nos conjuntos de treino/teste.
+    - **Stratified K-Fold:** Validação robusta com variação de apenas 1.1% entre folds.
     
     ## 👨‍💻 Autor
     
