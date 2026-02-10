@@ -201,7 +201,7 @@ if pagina == "🏠 Visão Geral":
         
         # Indicadores médios
         st.subheader("📈 Indicadores Médios")
-        indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV']
+        indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV', 'IPP']
         medias = []
         for ind in indicadores:
             if ind in df.columns:
@@ -230,8 +230,9 @@ elif pagina == "📈 Análise Exploratória":
         
         # Análise de correlação
         st.subheader("🔗 Correlação entre Indicadores")
-        indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV']
-        df_ind = df_filtrado[indicadores].apply(pd.to_numeric, errors='coerce').dropna()
+        indicadores = ['IDA', 'IEG', 'IAA', 'IPS', 'IPV', 'IPP']
+        ind_disponiveis = [i for i in indicadores if i in df_filtrado.columns]
+        df_ind = df_filtrado[ind_disponiveis].apply(pd.to_numeric, errors='coerce').dropna()
         
         if len(df_ind) > 0:
             corr = df_ind.corr()
@@ -241,7 +242,7 @@ elif pagina == "📈 Análise Exploratória":
         
         # Distribuição dos indicadores
         st.subheader("📊 Distribuição dos Indicadores")
-        indicador_sel = st.selectbox("Selecione o indicador:", indicadores)
+        indicador_sel = st.selectbox("Selecione o indicador:", ind_disponiveis)
         
         if indicador_sel in df_filtrado.columns:
             df_filtrado[indicador_sel] = pd.to_numeric(df_filtrado[indicador_sel], errors='coerce')
@@ -259,13 +260,13 @@ elif pagina == "📈 Análise Exploratória":
             
             df_risco = df_filtrado.dropna(subset=['CLASSE_RISCO'])
             
-            media_risco = df_risco.groupby('CLASSE_RISCO')[indicadores].mean()
+            media_risco = df_risco.groupby('CLASSE_RISCO')[ind_disponiveis].mean()
             
             fig = go.Figure()
             for classe in media_risco.index:
                 fig.add_trace(go.Bar(
                     name=classe,
-                    x=indicadores,
+                    x=ind_disponiveis,
                     y=media_risco.loc[classe].values,
                     marker_color='#22C55E' if classe == 'Sem Risco' else '#EF4444'
                 ))
@@ -455,6 +456,7 @@ elif pagina == "📋 Sobre o Projeto":
     | **IAA** | Índice de Autoavaliação |
     | **IPS** | Índice Psicossocial |
     | **IPV** | Índice de Ponto de Virada |
+    | **IPP** | Índice Psicopedagógico |
     | **IAN** | Índice de Adequação de Nível |
     | **INDE** | Índice de Desenvolvimento Educacional |
     
@@ -487,5 +489,5 @@ elif pagina == "📋 Sobre o Projeto":
 
 # Footer
 st.sidebar.markdown("---")
-st.sidebar.markdown("Desenvolvido para o Datathon FIAP 2024")
+st.sidebar.markdown("Desenvolvido para o Datathon FIAP 2025")
 st.sidebar.markdown("© Leandro Leme Crespo")
