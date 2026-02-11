@@ -1,0 +1,7 @@
+# Arquivos gerados pelos notebooks
+notebooks/*.png
+notebooks/*.csv
+notebooks/datathon-passos-magicos/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
