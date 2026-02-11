@@ -406,10 +406,10 @@ elif pagina == "🔮 Predição de Risco":
                         title={'text': "Probabilidade de Risco", 'font': {'size': 18}},
                         gauge={
                             'axis': {'range': [0, 100], 'tickwidth': 1},
-                            'bar': {'color': "darkgray", 'thickness': 0.2},
-                            'bgcolor': "white",
-                            'borderwidth': 2,
-                            'bordercolor': "gray",
+                            'bar': {'color': "rgba(0,0,0,0)", 'thickness': 0},
+                            'bgcolor': "rgba(0,0,0,0)",
+                            'borderwidth': 0,
+                            'bordercolor': "rgba(0,0,0,0)",
                             'steps': [
                                 {'range': [0, 30], 'color': "#22C55E"},
                                 {'range': [30, 60], 'color': "#FBBF24"},
