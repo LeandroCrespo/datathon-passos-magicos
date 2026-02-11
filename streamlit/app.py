@@ -91,7 +91,8 @@ def carregar_dados():
         paths = [
             'data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx',
             '../data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx',
-            '/home/ubuntu/datathon-passos-magicos/data/BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx'
+            str(pathlib.Path(__file__).parent / 'BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx'),
+            str(pathlib.Path(__file__).parent.parent / 'data' / 'BASE_DE_DADOS_PEDE_2024_DATATHON.xlsx'),
         ]
         
         for path in paths:
@@ -158,7 +159,12 @@ df = carregar_dados()
 modelo, scaler, le_dict, modelo_info = carregar_modelo()
 
 # Sidebar
-st.sidebar.image("https://www.passosmagicos.org.br/wp-content/uploads/2021/10/logo-passos-magicos.png", width=200)
+import pathlib
+_logo_path = pathlib.Path(__file__).parent / "logo_passos_magicos.png"
+if _logo_path.exists():
+    st.sidebar.image(str(_logo_path), width=200)
+else:
+    st.sidebar.title("🎓 Passos Mágicos")
 st.sidebar.title("📊 Navegação")
 
 pagina = st.sidebar.radio(
@@ -316,17 +322,25 @@ elif pagina == "🔮 Predição de Risco":
             st.markdown("**Dados Contextuais**")
             idade = st.number_input("Idade", min_value=6, max_value=25, value=12)
             ano_ingresso = st.number_input("Ano de Ingresso", min_value=2015, max_value=2025, value=2022)
-            genero = st.selectbox("Gênero", ["Feminino", "Masculino", "Menina", "Menino"])
-            instituicao = st.selectbox("Instituição de Ensino", 
-                                       ["Pública", "Escola Pública", "Privada",
-                                        "Privada - Programa de Apadrinhamento",
-                                        "Privada - Programa de apadrinhamento",
-                                        "Privada *Parcerias com Bolsa 100%",
-                                        "Privada - Pagamento por *Empresa Parceira",
-                                        "Escola JP II", "Rede Decisão",
-                                        "Bolsista Universitário *Formado (a)",
-                                        "Concluiu o 3º EM", "Desconhecido",
-                                        "Nenhuma das opções acima"])
+            genero_display = st.selectbox("Gênero", ["Feminino", "Masculino"])
+            # Mapeamento: dados usam "Feminino"/"Menina" e "Masculino"/"Menino" dependendo do ano
+            genero = genero_display  # O encoder conhece ambos os termos
+            
+            instituicao_opcoes = {
+                "Pública": "Pública",
+                "Privada": "Privada",
+                "Privada - Programa de Apadrinhamento": "Privada - Programa de Apadrinhamento",
+                "Privada com Bolsa 100%": "Privada *Parcerias com Bolsa 100%",
+                "Privada - Empresa Parceira": "Privada - Pagamento por *Empresa Parceira",
+                "Escola JP II": "Escola JP II",
+                "Rede Decisão": "Rede Decisão",
+                "Bolsista Universitário (Formado)": "Bolsista Universitário *Formado (a)",
+                "Concluiu o 3º EM": "Concluiu o 3º EM",
+                "Desconhecido": "Desconhecido",
+                "Nenhuma das opções acima": "Nenhuma das opções acima"
+            }
+            instituicao_display = st.selectbox("Instituição de Ensino", list(instituicao_opcoes.keys()))
+            instituicao = instituicao_opcoes[instituicao_display]
         
         st.markdown("---")
         
