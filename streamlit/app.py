@@ -13,6 +13,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import pickle
 import os
+import pathlib
 
 # Configuração da página
 st.set_page_config(
@@ -159,7 +160,6 @@ df = carregar_dados()
 modelo, scaler, le_dict, modelo_info = carregar_modelo()
 
 # Sidebar
-import pathlib
 _logo_path = pathlib.Path(__file__).parent / "logo_passos_magicos.png"
 if _logo_path.exists():
     st.sidebar.image(str(_logo_path), width=200)
